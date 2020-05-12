@@ -4,6 +4,12 @@
 #include <QMainWindow>
 #include <QTextEdit>
 #include <QFileDialog>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QDebug>
+#include <QJsonValue>
+#include <QJsonArray>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -20,12 +26,14 @@ private:
     Ui::MainWindow *ui;
     void MenuSetup();
 public slots:
-    QString ouvrirFichier(const QString &path = QString());
+    void ouvrirFichier(const QString &path = QString());
     void afficherEtapes();
     void afficherTexte();
+    void lireFichier(QString);
 signals:
     void OuvrirListeIngredients();
     void OuvrirListeEtapes();
+    void fichierTrouver(QString);
 };
 
 #endif // MAINWINDOW_H
