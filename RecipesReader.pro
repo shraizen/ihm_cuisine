@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        Recette.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        Recette.h \
         mainwindow.h
 
 # Default rules for deployment.

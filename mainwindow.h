@@ -10,6 +10,10 @@
 #include <QDebug>
 #include <QJsonValue>
 #include <QJsonArray>
+#include <QStringListModel>
+#include <QListView>
+#include <QLabel>
+#include "Recette.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -30,6 +34,11 @@ public slots:
     void afficherEtapes();
     void afficherTexte();
     void lireFichier(QString);
+    void AfficherDescription(Recette);
+    void AfficherIngredient(Recette);
+    void AfficherTemps(Recette);
+    void AfficherURL(Recette);
+    void MettreAJourRecette(Recette);
 signals:
     void OuvrirListeIngredients();
     void OuvrirListeEtapes();
