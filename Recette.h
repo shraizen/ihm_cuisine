@@ -11,7 +11,7 @@ private:
     QStringList Description;
     QStringList Ingredient;
     QStringList Etapes;
-    QStringList temps;
+    QStringList Temps;
     QStringList URL;
 
 public:
@@ -26,8 +26,6 @@ public:
     void setIngredient(const QStringList&);
     void setTemps(const QStringList&);
     void setURL(const QStringList&);
-
-    QStringList traitementVueTemps(QStringList&);
 
 };
 

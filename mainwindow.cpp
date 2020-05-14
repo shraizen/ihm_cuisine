@@ -5,146 +5,85 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    MenuSetup();
-    texte = new QTextEdit;
-    texte->setReadOnly(true);
-    setCentralWidget(texte);
-    setGeometry(500,300,800,559);
-    connect(this,SIGNAL(fichierTrouver(QString)),this,SLOT(lireFichier(QString)));
+    MenuSetup();                                                                         // Lance la fonction MenuSetup()
+    texte = new QTextEdit;          // || Création d'une zone de texte accessible seulement en lecture
+    texte->setReadOnly(true);       // ||
+    setCentralWidget(texte);        // \/
+    setGeometry(500,300,800,559);                                                        // Initialise la taille de la fenetre
+    connect(this,SIGNAL(fichierTrouver(QString)),this,SLOT(LectureFichier(QString)));    // Détection qu'un fichier est trouvé et lecture du fichier
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete ui;    //Supprime l'UI
 }
 
 void MainWindow::MenuSetup()
 {
-    QMenu *fileMenu = new QMenu(tr("&Fichier"), this);
-    menuBar()->addMenu(fileMenu);
+    ui->setupUi(this);                                                                      // Initialise l'interface
+    QMenu *fileMenu = new QMenu(tr("&Fichier"), this);                                      // Création d'un menu Fichier sur le mainWindow
+    menuBar()->addMenu(fileMenu);                                                           // Affectation de ce menu à la bar de menu
 
-    fileMenu->addAction(tr("&Ouvrir..."), this, SLOT(ouvrirFichier()),QKeySequence::Open);
-    fileMenu->addAction(tr("&Quitter"), qApp, SLOT(quit()),QKeySequence::Quit);
+    fileMenu->addAction(tr("&Ouvrir..."), this, SLOT(OuvrirFichier()),QKeySequence::Open);  // Création d'un bouton Ouvrir sur le menu, qui lance la fonction ouvrirfichier()
+    fileMenu->addAction(tr("&Quitter"), qApp, SLOT(quit()),QKeySequence::Quit);             // Création d'un bouton Quitter sur le menu, qui lance la fonction quit()
 
-    emit OuvrirListeEtapes();
-    emit OuvrirListeIngredients();
+    emit OuvrirListeEtapes();                   // Envoie le signal OuvrirListeEtapes()
+    emit OuvrirListeIngredients();              // Envoie le signal OuvrirListeIngredients()
 }
 
-void MainWindow::ouvrirFichier(const QString &path)
+void MainWindow::LectureFichier(QString nomFichier)
 {
-    QString nomFichier = path;
-    if (nomFichier.isNull())
-        nomFichier = QFileDialog::getOpenFileName(this, tr("Ouvrir le fichier"), "", tr("Fichiers JSON (*.json)"));
-    emit fichierTrouver(nomFichier);
+    Recette R;                                          // Créer une recette
+    ui->setupUi(this);                                  //
+    MenuSetup();                                        // Lance la fonction MenuSetup()
+    Trait.LireFichier(nomFichier, R);                   // Lance la lecture du fichier()
+    MettreAJourRecette(R);                              // Met à jour les données
 }
 
-void MainWindow::afficherEtapes()
+void MainWindow::OuvrirFichier(const QString &path)
 {
-}
-
-void MainWindow::afficherTexte()
-{
-  //  ui->textExplications->append("lol");
-}
-
-void MainWindow::lireFichier(QString nomFichier)
-{
-    ui->setupUi(this);
-    MenuSetup();
-    QFile fichier(nomFichier);
-    QJsonParseError error;
-    QString texteAAfficher;
-    Recette R;
-
-    if(fichier.open(QFile::ReadOnly)) {
-       QByteArray donnees = fichier.readAll();
-
-       QJsonDocument doc = QJsonDocument::fromJson(donnees, &error);
-       if(error.error != QJsonParseError::NoError)
-       {
-           qCritical() << "Impossible d’interpréter le fichier : " << error.errorString();
-       }
-       else
-       {
-
-           QJsonObject obj=doc.object();
-
-           qDebug() << "Nom : " << (obj.value("name")).toString();
-
-           qDebug() << "Description : " << (obj.value("description")).toString();
-           QJsonValue val = obj.value("recipeIngredient");
-           texteAAfficher = "Nom : \n";
-           texteAAfficher += (obj.value("name")).toString();
-           texteAAfficher += "\nDescription : \n";
-           texteAAfficher += (obj.value("description")).toString();
-           QStringList listeDescription;
-           listeDescription << "Nom : \n" << (obj.value("name")).toString() << "\nDescription : \n" << (obj.value("description")).toString();
-           R.setDescription(listeDescription);
-           QJsonArray valArray = val.toArray();
-           QStringList listeIngredient;
-           listeIngredient << "ingredients : ";
-           for (auto value: valArray)
-           {
-               qDebug() << "ingredient : " << value.toString();
-               listeIngredient << "_ " + value.toString();
-           }
-           R.setIngredient(listeIngredient);
-           val = obj.value("recipeInstructions");
-           valArray = val.toArray();
-           for (auto value: valArray)
-           {
-               qDebug() << "instruction " << value.toString();
-           }
-           QStringList temps;
-           QStringList URL;
-           qDebug() << "Temps de préparation : " << (obj.value("prepTime")).toString();
-           temps << (obj.value("prepTime")).toString();
-           qDebug() << "Temps de cuisson : " << (obj.value("cookTime")).toString();
-           temps << (obj.value("cookTime")).toString();
-           qDebug() << "Total time : " << (obj.value("totalTime")).toString();
-           temps << (obj.value("totalTime")).toString();
-           R.setTemps(temps);
-           qDebug() << "URL : " << (obj.value("url")).toString();
-           URL << "URL : " << (obj.value("url")).toString();
-           R.setURL(URL);
-           MettreAJourRecette(R);
-       }
-    }
-    else {
-        qDebug() << "lol";
-    }
+    QString nomFichier = path;                                                                                       // || Ouverture d'un fichier ou d'une fenetre de recherche de fichier
+    if (nomFichier.isNull())                                                                                         // ||
+        nomFichier = QFileDialog::getOpenFileName(this, tr("Ouvrir le fichier"), "", tr("Fichiers JSON (*.json)"));  // \/
+    if (!nomFichier.isNull())                                                                                               // || Emmision du signal pour indiquer qu'un fichier à été trouvé
+        emit fichierTrouver(nomFichier);                                                                                    // \/
 }
 
 void MainWindow::AfficherDescription(Recette R)
 {
-    QStringListModel *modeleDescription = new QStringListModel(R.getDescription());
-    ui->listeDescription->setModel(modeleDescription);
+    QStringListModel *modeleDescription = new QStringListModel(R.getDescription());                                  // || Affichage de la description
+    ui->listeDescription->setModel(modeleDescription);                                                               // \/
 }
 
 void MainWindow::AfficherIngredient(Recette R)
 {
-    QStringListModel *modeleIngredient = new QStringListModel(R.getIngredient());
-    ui->listeIngredient->setModel(modeleIngredient);
+    QStringListModel *modeleIngredient = new QStringListModel(R.getIngredient());                                    // || Affichage des Ingrédient
+    ui->listeIngredient->setModel(modeleIngredient);                                                                 // \/
+}
+
+void MainWindow::AfficherEtapes(Recette R)
+{
+
 }
 
 void MainWindow::AfficherTemps(Recette R)
 {
-    QStringListModel *modeleTemps = new QStringListModel(R.getTemps());
-    ui->VueTemps->setModel(modeleTemps);
+    QStringListModel *modeleTemps = new QStringListModel(Trait.traitementVueTemps(R.getTemps()));                     // || Affichage du temps
+    ui->VueTemps->setModel(modeleTemps);                                                                              // \/
 }
 
 void MainWindow::AfficherURL(Recette R)
 {
-    QStringListModel *modeleURL = new QStringListModel(R.getURL());
-    ui->VueURL->setModel(modeleURL);
+    QStringListModel *modeleURL = new QStringListModel(R.getURL());                                                   // || Affichage de l'a description'URL
+    ui->VueURL->setModel(modeleURL);                                                                                  // \/
 }
 
 void MainWindow::MettreAJourRecette(Recette R)
 {
-    AfficherDescription(R);
-    AfficherIngredient(R);
-    AfficherTemps(R);
-    AfficherURL(R);
+    AfficherDescription(R);                       // || Lance les fonctions d'affichage
+    AfficherIngredient(R);                        // ||
+    AfficherTemps(R);                             // ||
+    AfficherURL(R);                               // \/
 }
 
 

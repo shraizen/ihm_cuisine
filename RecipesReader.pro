@@ -27,11 +27,13 @@ CONFIG += c++11
 SOURCES += \
         Recette.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        traitement.cpp
 
 HEADERS += \
         Recette.h \
-        mainwindow.h
+        mainwindow.h \
+        traitement.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

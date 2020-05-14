@@ -14,6 +14,7 @@
 #include <QListView>
 #include <QLabel>
 #include "Recette.h"
+#include "traitement.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -23,23 +24,31 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QTextEdit * texte;
+
 private:
+
     Ui::MainWindow *ui;
+    QTextEdit * texte;
+    Traitement Trait;
     void MenuSetup();
+
 public slots:
-    void ouvrirFichier(const QString &path = QString());
-    void afficherEtapes();
-    void afficherTexte();
-    void lireFichier(QString);
+
+    void OuvrirFichier(const QString &path = QString());
+    void LectureFichier(QString);
+
     void AfficherDescription(Recette);
     void AfficherIngredient(Recette);
+    void AfficherEtapes(Recette);
     void AfficherTemps(Recette);
     void AfficherURL(Recette);
     void MettreAJourRecette(Recette);
+
 signals:
+
     void OuvrirListeIngredients();
     void OuvrirListeEtapes();
     void fichierTrouver(QString);
