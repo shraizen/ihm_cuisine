@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     texte->setReadOnly(true);       // ||
     setCentralWidget(texte);        // \/
     setGeometry(500,300,800,559);                                                        // Initialise la taille de la fenetre
+    setAcceptDrops(true);
     connect(this,SIGNAL(fichierTrouver(QString)),this,SLOT(LectureFichier(QString)));    // Détection qu'un fichier est trouvé et lecture du fichier
 }
 
@@ -84,6 +85,21 @@ void MainWindow::MettreAJourRecette(Recette R)
     AfficherIngredient(R);                        // ||
     AfficherTemps(R);                             // ||
     AfficherURL(R);                               // \/
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *e)
+{
+    if (e->mimeData()->hasUrls()) {
+        e->acceptProposedAction();
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent *e)
+{
+    foreach (const QUrl &url, e->mimeData()->urls()) {
+        QString fileName = url.toLocalFile();
+        LectureFichier(fileName);
+    }
 }
 
 

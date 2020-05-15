@@ -13,6 +13,8 @@
 #include <QStringListModel>
 #include <QListView>
 #include <QLabel>
+#include <QDropEvent>
+#include <QMimeData>
 #include "Recette.h"
 #include "traitement.h"
 QT_BEGIN_NAMESPACE
@@ -34,6 +36,8 @@ private:
     QTextEdit * texte;
     Traitement Trait;
     void MenuSetup();
+    void dragEnterEvent(QDragEnterEvent*);
+    void dropEvent(QDropEvent*);
 
 public slots:
 
