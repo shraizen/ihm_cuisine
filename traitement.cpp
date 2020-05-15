@@ -55,10 +55,10 @@ void Traitement::LireFichier(QString nomFichier, Recette& R)
            QJsonArray valArray = val.toArray();                                               // \/
 
 
-           listeDescription << "Nom : \n" << (obj.value("name")).toString()
+           listeDescription << "\n" + (obj.value("name")).toString() + "\n"
                             << "\nDescription : \n" << (obj.value("description")).toString(); //Récupère la description
 
-           listeIngredient << "ingredients : ";                                               // || Récupère les ingrédient
+           listeIngredient << "ingredients : \n";                                             // || Récupère les ingrédient
            for (auto value: valArray)                                                         // ||
            {                                                                                  // ||
                listeIngredient << "_ " + value.toString();                                    // ||

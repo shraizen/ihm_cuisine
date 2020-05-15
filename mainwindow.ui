@@ -30,7 +30,7 @@
      <attribute name="title">
       <string>Explications</string>
      </attribute>
-     <widget class="QListView" name="listeDescription">
+     <widget class="QListWidget" name="listeDescription">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -39,32 +39,14 @@
         <height>411</height>
        </rect>
       </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAsNeeded</enum>
-      </property>
       <property name="sizeAdjustPolicy">
-       <enum>QAbstractScrollArea::AdjustIgnored</enum>
-      </property>
-      <property name="autoScroll">
-       <bool>true</bool>
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
       </property>
       <property name="textElideMode">
        <enum>Qt::ElideNone</enum>
       </property>
-      <property name="resizeMode">
-       <enum>QListView::Adjust</enum>
-      </property>
       <property name="wordWrap">
        <bool>true</bool>
-      </property>
-      <property name="itemAlignment">
-       <set>Qt::AlignLeading</set>
       </property>
      </widget>
     </widget>
@@ -72,7 +54,7 @@
      <attribute name="title">
       <string>Ingrédients</string>
      </attribute>
-     <widget class="QListView" name="listeIngredient">
+     <widget class="QListWidget" name="listeIngredient">
       <property name="geometry">
        <rect>
         <x>90</x>

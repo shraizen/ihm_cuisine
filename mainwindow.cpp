@@ -52,14 +52,31 @@ void MainWindow::OuvrirFichier(const QString &path)
 
 void MainWindow::AfficherDescription(Recette R)
 {
-    QStringListModel *modeleDescription = new QStringListModel(R.getDescription());                                  // || Affichage de la description
-    ui->listeDescription->setModel(modeleDescription);                                                               // \/
+    //création du style de texte :                                                                                     // || Affichage de la description et mise en place du style
+    QString style = "";                                                                                                // ||
+       style += "QListView { ";                                                                                        // ||
+       style += "font-family: Times New Roman;font-size: 15pt;";                                                       // ||
+       style += "}";                                                                                                   // ||
+    QFont titre("Times New Roman", 24, QFont::Bold);                                                                   // ||
+    ui->listeDescription->setStyleSheet(style);                                                                        // ||
+    ui->listeDescription->addItems(R.getDescription());                                                                // ||
+    ui->listeDescription->itemAt(1,0)->setTextAlignment(Qt::AlignCenter);                                              // ||
+    ui->listeDescription->itemAt(1,0)->setFont(titre);                                                                 // \/
+
 }
 
 void MainWindow::AfficherIngredient(Recette R)
 {
-    QStringListModel *modeleIngredient = new QStringListModel(R.getIngredient());                                    // || Affichage des Ingrédient
-    ui->listeIngredient->setModel(modeleIngredient);                                                                 // \/
+    //création du style de texte :                                                                                     // || Affichage des Ingrédient et mise en place du style
+    QString style = "";                                                                                                // ||
+       style += "QListView { ";                                                                                        // ||
+       style += "font-family: Times New Roman;font-size: 12pt;";                                                       // ||
+       style += "}";                                                                                                   // ||
+    QFont titre("Times New Roman", 15, QFont::Bold);                                                                   // ||
+    ui->listeIngredient->setStyleSheet(style);                                                                         // ||
+    ui->listeIngredient->addItems(R.getIngredient());                                                                  // ||
+    ui->listeIngredient->itemAt(1,0)->setTextAlignment(Qt::AlignCenter);                                               // ||
+    ui->listeIngredient->itemAt(1,0)->setFont(titre);                                                                  // \/
 }
 
 void MainWindow::AfficherEtapes(Recette R)
@@ -69,14 +86,14 @@ void MainWindow::AfficherEtapes(Recette R)
 
 void MainWindow::AfficherTemps(Recette R)
 {
-    QStringListModel *modeleTemps = new QStringListModel(Trait.traitementVueTemps(R.getTemps()));                     // || Affichage du temps
-    ui->VueTemps->setModel(modeleTemps);                                                                              // \/
+    QStringListModel *modeleTemps = new QStringListModel(Trait.traitementVueTemps(R.getTemps())); // || Affichage du temps
+    ui->VueTemps->setModel(modeleTemps);                                                          // \/
 }
 
 void MainWindow::AfficherURL(Recette R)
 {
-    QStringListModel *modeleURL = new QStringListModel(R.getURL());                                                   // || Affichage de l'a description'URL
-    ui->VueURL->setModel(modeleURL);                                                                                  // \/
+    QStringListModel *modeleURL = new QStringListModel(R.getURL());                               // || Affichage de l'URL
+    ui->VueURL->setModel(modeleURL);                                                              // \/
 }
 
 void MainWindow::MettreAJourRecette(Recette R)
@@ -87,20 +104,20 @@ void MainWindow::MettreAJourRecette(Recette R)
     AfficherURL(R);                               // \/
 }
 
-void MainWindow::dragEnterEvent(QDragEnterEvent *e)
-{
-    if (e->mimeData()->hasUrls()) {
-        e->acceptProposedAction();
-    }
-}
+void MainWindow::dragEnterEvent(QDragEnterEvent *e)     // || Fonction qui lorsque qu'un fichier survol la fenetre mainWindow, l'autorise à être déposé (drop)
+{                                                       // ||
+    if (e->mimeData()->hasUrls()) {                     // ||
+        e->acceptProposedAction();                      // ||
+    }                                                   // ||
+}                                                       // \/
 
-void MainWindow::dropEvent(QDropEvent *e)
-{
-    foreach (const QUrl &url, e->mimeData()->urls()) {
-        QString fileName = url.toLocalFile();
-        LectureFichier(fileName);
-    }
-}
+void MainWindow::dropEvent(QDropEvent *e)               // || Fonction qui lorsqu'un fichier est déposé, lance la fonction LectureFichier()
+{                                                       // ||
+    foreach (const QUrl &url, e->mimeData()->urls()) {  // ||
+        QString fileName = url.toLocalFile();           // ||
+        LectureFichier(fileName);                       // ||
+    }                                                   // ||
+}                                                       // \/
 
 
 

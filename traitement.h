@@ -1,6 +1,7 @@
 #ifndef TRAITEMENT_H
 #define TRAITEMENT_H
 
+#include <QMainWindow>
 #include <QTextEdit>
 #include <string>
 #include <QStringListModel>
@@ -14,6 +15,7 @@
 #include <QStringListModel>
 #include <QListView>
 #include <QLabel>
+#include <QFont>
 #include "Recette.h"
 
 class Traitement
