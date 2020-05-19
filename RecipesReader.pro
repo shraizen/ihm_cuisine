@@ -25,13 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        Recette.cpp \
+        lectureJSON.cpp \
+        recette.cpp \
         main.cpp \
         mainwindow.cpp \
         traitement.cpp
 
 HEADERS += \
-        Recette.h \
+        lectureJSON.h \
+        recette.h \
         mainwindow.h \
         traitement.h
 

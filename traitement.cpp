@@ -1,8 +1,30 @@
+/**
+ * \file traitement.cpp
+ * \author Masset Eliot - Pesquet Cedric
+ *
+ * \brief Programme permettant de traiter les données du programme
+ *
+ */
+
 #include "traitement.h"
+
+/**
+ * \fn Traitement::Traitement()
+ * \brief Fonction de création d'une instance de la classe Traitement
+ *
+ */
 
 Traitement::Traitement()
 {
 }
+
+/**
+ * \fn QStringList Traitement::traitementVueTemps(QStringList temps)
+ * \brief Fonction qui renvoie le temps sous forme compréhensible et lisible
+ *
+ * \param temps QStringList qui contient le temps sous forme non lisible
+ * \return QStringList qui contient le temps sous forme lisible et compréhensible
+ */
 
 QStringList Traitement::traitementVueTemps(QStringList temps)
 {
@@ -15,74 +37,15 @@ QStringList Traitement::traitementVueTemps(QStringList temps)
     QRegExp CalcMinutes("([0-9]*)M");                                                                    // Expréssion régulière pour récupérer les minutes
     CalcMinutes.indexIn(tempsPreparation);                                                                                                      // || Récupère le temps de préparation
     CalcHeures.indexIn(tempsPreparation);                                                                                                       // ||
-    TexteVueTemps << "Temps de Préparation : " << CalcHeures.cap(1) << "heures et " << CalcMinutes.cap(1) << "minutes";                         // \/
+    TexteVueTemps << "  Temps de Préparation : " + CalcHeures.cap(1) + " heures et " + CalcMinutes.cap(1) + " minutes  ";                       // \/
     tempsTotalHeures = (CalcHeures.cap(1)).toInt();        // || Pour calculer le temps total
     tempsTotalMinutes = (CalcMinutes.cap(1)).toInt();      // \/
     CalcMinutes.indexIn(tempsCuisson);                                                                                                          // || Récupère le temps de cuisson
     CalcHeures.indexIn(tempsCuisson);                                                                                                           // ||
-    TexteVueTemps << "Temps de Cuisson : " << CalcHeures.cap(1) << "heures et " << CalcMinutes.cap(1) << "minutes";                             // \/
+    TexteVueTemps << "  Temps de Cuisson : " + CalcHeures.cap(1) + " heures et " + CalcMinutes.cap(1) + " minutes  ";                           // \/
     tempsTotalHeures += (CalcHeures.cap(1)).toInt();       // || Pour calculer le temps total
     tempsTotalMinutes += (CalcMinutes.cap(1)).toInt();     // \/
-    TexteVueTemps << "Temps total : " << QString::number(tempsTotalHeures) << "heures et " << QString::number(tempsTotalMinutes) << "minutes";  // Récupère le temps total
+    TexteVueTemps << "  Temps total : " + QString::number(tempsTotalHeures) + " heures et " + QString::number(tempsTotalMinutes) + " minutes  ";// Récupère le temps total
     return(TexteVueTemps);
 }
 
-void Traitement::LireFichier(QString nomFichier, Recette& R)
-{
-
-    QFile fichier(nomFichier);                          // || Déclaration de variables
-    QJsonParseError error;                              // ||
-    QString texteAAfficher;                             // \/
-
-    if(fichier.open(QFile::ReadOnly)) {                                                       //test la lecture du fichier
-
-       QByteArray donnees = fichier.readAll();                                                // || Récupération du document JSON et de son contenu
-       QJsonDocument doc = QJsonDocument::fromJson(donnees, &error);                          // \/
-
-       if(error.error != QJsonParseError::NoError)                                            // || Si la récupération des données contient une erreur
-       {                                                                                      // ||
-           qCritical() << "Impossible d’interpréter le fichier : " << error.errorString();    // ||
-       }                                                                                      // \/
-       else                                                                                   // Sinon :
-       {
-
-           QJsonObject obj=doc.object();                                                      // || Déclaration de variables
-           QStringList listeDescription;                                                      // ||
-           QStringList listeIngredient;                                                       // ||
-           QStringList temps;                                                                 // ||
-           QStringList URL;                                                                   // ||
-           QJsonValue val = obj.value("recipeIngredient");                                    // ||
-           QJsonArray valArray = val.toArray();                                               // \/
-
-
-           listeDescription << "\n" + (obj.value("name")).toString() + "\n"
-                            << "\nDescription : \n" << (obj.value("description")).toString(); //Récupère la description
-
-           listeIngredient << "ingredients : \n";                                             // || Récupère les ingrédient
-           for (auto value: valArray)                                                         // ||
-           {                                                                                  // ||
-               listeIngredient << "_ " + value.toString();                                    // ||
-           }                                                                                  // \/
-
-           val = obj.value("recipeInstructions");                                             // || Récupère les instructions
-           valArray = val.toArray();                                                          // ||
-           for (auto value: valArray)                                                         // ||
-           {                                                                                  // ||
-               qDebug() << "instruction " << value.toString();                                // ||
-           }                                                                                  // \/
-
-           temps << (obj.value("prepTime")).toString();                                       // ||Récupère les temps
-           temps << (obj.value("cookTime")).toString();                                       // ||
-           temps << (obj.value("totalTime")).toString();                                      // \/
-           URL << "URL : " << (obj.value("url")).toString();                                  // Récupère l'URL
-
-           R.setDescription(listeDescription);                                                // || Met à jour les données de la recette
-           R.setIngredient(listeIngredient);                                                  // ||
-           R.setTemps(temps);                                                                 // ||
-           R.setURL(URL);                                                                     // \/
-       }
-    }
-    else {
-        qDebug() << "lol";
-    }
-}
