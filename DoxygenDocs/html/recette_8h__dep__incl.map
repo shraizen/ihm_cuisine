@@ -1,0 +1,9 @@
+<map id="recette.h" name="recette.h">
+<area shape="rect" id="node1" title="Recette de cuisine." alt="" coords="174,5,254,32"/>
+<area shape="rect" id="node2" href="$lectureJSON_8h.html" title="lecture d&#39;un fichier JSON" alt="" coords="93,80,204,107"/>
+<area shape="rect" id="node6" href="$traitement_8h.html" title="Traitement des données du programme." alt="" coords="228,80,331,107"/>
+<area shape="rect" id="node3" href="$lectureJSON_8cpp.html" title="Programme permettant la lecture d&#39;un fichier JSON." alt="" coords="5,155,132,181"/>
+<area shape="rect" id="node4" href="$mainwindow_8h.html" title="implémentation de la fenetre principal (MainWindow)" alt="" coords="156,155,272,181"/>
+<area shape="rect" id="node5" href="$main_8cpp.html" title="Programme principal." alt="" coords="173,229,255,256"/>
+<area shape="rect" id="node7" href="$traitement_8cpp.html" title="Programme permettant de traiter les données du programme." alt="" coords="296,155,415,181"/>
+</map>
