@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lecturejson_42',['LectureJSON',['../classLectureJSON.html',1,'']]]
+  ['mainwindow_41',['MainWindow',['../classMainWindow.html',1,'']]]
 ];
