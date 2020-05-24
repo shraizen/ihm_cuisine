@@ -73,55 +73,100 @@ $(function() {
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;QStringListModel&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">class </span><a class="code" href="classRecette.html">Recette</a></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    QStringList Description; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    QStringList Ingredient; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    QStringList Etapes; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    QStringList Temps; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    QStringList URL; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="classRecette.html#aeade8a31070ce09c8c9f66b01a020b1a">Recette</a>();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    QStringList <a class="code" href="classRecette.html#a0e6f487548195c1497d273c5b5e74e6a">getDescription</a>();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    QStringList <a class="code" href="classRecette.html#a0ca2be9a0f1b7b5ad8e18dbd8fae37d8">getIngredient</a>();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    QStringList <a class="code" href="classRecette.html#a123d128adbeb6b13de4b6317f2fb3377">getEtape</a>(<span class="keywordtype">int</span>);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    QStringList <a class="code" href="classRecette.html#af8476cc52694470058f09f870fda2247">getTemps</a>();</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;QJsonParseError&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;QJsonObject&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;QJsonArray&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;QFile&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;QLabel&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;QTextEdit&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;QFileDialog&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;QFile&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;QJsonDocument&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;QJsonObject&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;QJsonValue&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;QJsonArray&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;QStringListModel&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;QListView&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;QLabel&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;QStackedWidget&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;QDropEvent&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;QMimeData&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;QStateMachine&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;QMainWindow&gt;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;QTextEdit&gt;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;QStringListModel&gt;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;QFileDialog&gt;</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;QFile&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;QJsonDocument&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;QJsonObject&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;QJsonValue&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;QJsonArray&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;QListView&gt;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;QLabel&gt;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;QFont&gt;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classRecette.html">   56</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRecette.html">Recette</a></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;{</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    QStringList Description; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QStringList Ingredient; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    QStringList Etapes; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    QStringList Informations; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    QStringList Temps; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    QStringList URL; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="classRecette.html#aeade8a31070ce09c8c9f66b01a020b1a">Recette</a>();</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    QStringList <a class="code" href="classRecette.html#a17fc301a158f92d273a642e67c1d34ef">getURL</a>();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    QStringList <a class="code" href="classRecette.html#a0e6f487548195c1497d273c5b5e74e6a">getDescription</a>();</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#a750a78578d2a6e8162ee4f582df5a7ce">setDescription</a>(<span class="keyword">const</span> QStringList&amp;);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    QStringList <a class="code" href="classRecette.html#a0ca2be9a0f1b7b5ad8e18dbd8fae37d8">getIngredient</a>();</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#aae4470bc62e7256c7368875fd2cfba1a">setIngredient</a>(<span class="keyword">const</span> QStringList&amp;);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#a2264a838e6fd32957769fd1b18cb8bdf">setEtape</a>(<span class="keyword">const</span> QStringList&amp;);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#a0b5ee282b2d49cf56844fe5620fe2280">setTemps</a>(<span class="keyword">const</span> QStringList&amp;);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#abc4194b5f6cf2bab0204cbb40f230545">setURL</a>(<span class="keyword">const</span> QStringList&amp;);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;};</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#endif // RECETTE_H</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    QStringList <a class="code" href="classRecette.html#a123d128adbeb6b13de4b6317f2fb3377">getEtape</a>(<span class="keywordtype">int</span>);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    QStringList <a class="code" href="classRecette.html#a0ec2fb66c754dd35e67624a9bacf7266">getEtapes</a>();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    QStringList <a class="code" href="classRecette.html#a93a1016492f01e02d77179eff5290354">getInformation</a>();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    QStringList <a class="code" href="classRecette.html#af8476cc52694470058f09f870fda2247">getTemps</a>();</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    QStringList <a class="code" href="classRecette.html#a17fc301a158f92d273a642e67c1d34ef">getURL</a>();</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#a750a78578d2a6e8162ee4f582df5a7ce">setDescription</a>(<span class="keyword">const</span> QStringList&amp;);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#aae4470bc62e7256c7368875fd2cfba1a">setIngredient</a>(<span class="keyword">const</span> QStringList&amp;);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#a2264a838e6fd32957769fd1b18cb8bdf">setEtape</a>(<span class="keyword">const</span> QStringList&amp;);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordtype">void</span> setInformation(<span class="keyword">const</span> QStringList&amp;);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#a0b5ee282b2d49cf56844fe5620fe2280">setTemps</a>(<span class="keyword">const</span> QStringList&amp;);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classRecette.html#abc4194b5f6cf2bab0204cbb40f230545">setURL</a>(<span class="keyword">const</span> QStringList&amp;);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;};</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="preprocessor">#endif // RECETTE_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassRecette_html_a0e6f487548195c1497d273c5b5e74e6a"><div class="ttname"><a href="classRecette.html#a0e6f487548195c1497d273c5b5e74e6a">Recette::getDescription</a></div><div class="ttdeci">QStringList getDescription()</div><div class="ttdoc">Fonction qui renvoie la description d'une recette.</div><div class="ttdef"><b>Definition:</b> Recette.cpp:7</div></div>
-<div class="ttc" id="aclassRecette_html_aae4470bc62e7256c7368875fd2cfba1a"><div class="ttname"><a href="classRecette.html#aae4470bc62e7256c7368875fd2cfba1a">Recette::setIngredient</a></div><div class="ttdeci">void setIngredient(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie la liste des ingrédients d'une recette.</div><div class="ttdef"><b>Definition:</b> Recette.cpp:32</div></div>
-<div class="ttc" id="aclassRecette_html"><div class="ttname"><a href="classRecette.html">Recette</a></div><div class="ttdoc">classe permettant de stocker et modifier une recette de cuisine</div><div class="ttdef"><b>Definition:</b> Recette.h:7</div></div>
-<div class="ttc" id="aclassRecette_html_a17fc301a158f92d273a642e67c1d34ef"><div class="ttname"><a href="classRecette.html#a17fc301a158f92d273a642e67c1d34ef">Recette::getURL</a></div><div class="ttdeci">QStringList getURL()</div><div class="ttdoc">Fonction qui renvoie l'URL d'une recette.</div><div class="ttdef"><b>Definition:</b> Recette.cpp:22</div></div>
-<div class="ttc" id="aclassRecette_html_a750a78578d2a6e8162ee4f582df5a7ce"><div class="ttname"><a href="classRecette.html#a750a78578d2a6e8162ee4f582df5a7ce">Recette::setDescription</a></div><div class="ttdeci">void setDescription(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie la description d'une recette.</div><div class="ttdef"><b>Definition:</b> Recette.cpp:27</div></div>
-<div class="ttc" id="aclassRecette_html_a0b5ee282b2d49cf56844fe5620fe2280"><div class="ttname"><a href="classRecette.html#a0b5ee282b2d49cf56844fe5620fe2280">Recette::setTemps</a></div><div class="ttdeci">void setTemps(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie le temps d'une recette.</div><div class="ttdef"><b>Definition:</b> Recette.cpp:37</div></div>
-<div class="ttc" id="aclassRecette_html_a2264a838e6fd32957769fd1b18cb8bdf"><div class="ttname"><a href="classRecette.html#a2264a838e6fd32957769fd1b18cb8bdf">Recette::setEtape</a></div><div class="ttdeci">void setEtape(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie la liste des étapes d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:115</div></div>
-<div class="ttc" id="aclassRecette_html_aeade8a31070ce09c8c9f66b01a020b1a"><div class="ttname"><a href="classRecette.html#aeade8a31070ce09c8c9f66b01a020b1a">Recette::Recette</a></div><div class="ttdeci">Recette()</div><div class="ttdoc">Fonction de création d'une instance d'une classe Recette.</div><div class="ttdef"><b>Definition:</b> Recette.cpp:3</div></div>
-<div class="ttc" id="aclassRecette_html_af8476cc52694470058f09f870fda2247"><div class="ttname"><a href="classRecette.html#af8476cc52694470058f09f870fda2247">Recette::getTemps</a></div><div class="ttdeci">QStringList getTemps()</div><div class="ttdoc">Fonction qui renvoie le temps d'une recette.</div><div class="ttdef"><b>Definition:</b> Recette.cpp:17</div></div>
-<div class="ttc" id="aclassRecette_html_abc4194b5f6cf2bab0204cbb40f230545"><div class="ttname"><a href="classRecette.html#abc4194b5f6cf2bab0204cbb40f230545">Recette::setURL</a></div><div class="ttdeci">void setURL(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie l'URL d'une recette.</div><div class="ttdef"><b>Definition:</b> Recette.cpp:42</div></div>
+<div class="ttc" id="aclassRecette_html_a0e6f487548195c1497d273c5b5e74e6a"><div class="ttname"><a href="classRecette.html#a0e6f487548195c1497d273c5b5e74e6a">Recette::getDescription</a></div><div class="ttdeci">QStringList getDescription()</div><div class="ttdoc">Fonction qui renvoie la description d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:28</div></div>
+<div class="ttc" id="aclassRecette_html_aae4470bc62e7256c7368875fd2cfba1a"><div class="ttname"><a href="classRecette.html#aae4470bc62e7256c7368875fd2cfba1a">Recette::setIngredient</a></div><div class="ttdeci">void setIngredient(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie la liste des ingrédients d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:127</div></div>
+<div class="ttc" id="aclassRecette_html"><div class="ttname"><a href="classRecette.html">Recette</a></div><div class="ttdoc">classe permettant de stocker et modifier une recette de cuisine</div><div class="ttdef"><b>Definition:</b> recette.h:56</div></div>
+<div class="ttc" id="aclassRecette_html_a17fc301a158f92d273a642e67c1d34ef"><div class="ttname"><a href="classRecette.html#a17fc301a158f92d273a642e67c1d34ef">Recette::getURL</a></div><div class="ttdeci">QStringList getURL()</div><div class="ttdoc">Fonction qui renvoie l'URL d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:103</div></div>
+<div class="ttc" id="aclassRecette_html_a93a1016492f01e02d77179eff5290354"><div class="ttname"><a href="classRecette.html#a93a1016492f01e02d77179eff5290354">Recette::getInformation</a></div><div class="ttdeci">QStringList getInformation()</div><div class="ttdoc">Fonction qui renvoie les informations complémentaires d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:79</div></div>
+<div class="ttc" id="aclassRecette_html_a750a78578d2a6e8162ee4f582df5a7ce"><div class="ttname"><a href="classRecette.html#a750a78578d2a6e8162ee4f582df5a7ce">Recette::setDescription</a></div><div class="ttdeci">void setDescription(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie la description d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:115</div></div>
+<div class="ttc" id="aclassRecette_html_a0b5ee282b2d49cf56844fe5620fe2280"><div class="ttname"><a href="classRecette.html#a0b5ee282b2d49cf56844fe5620fe2280">Recette::setTemps</a></div><div class="ttdeci">void setTemps(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie le temps d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:163</div></div>
+<div class="ttc" id="aclassRecette_html_a2264a838e6fd32957769fd1b18cb8bdf"><div class="ttname"><a href="classRecette.html#a2264a838e6fd32957769fd1b18cb8bdf">Recette::setEtape</a></div><div class="ttdeci">void setEtape(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie la liste des étapes d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:139</div></div>
+<div class="ttc" id="aclassRecette_html_aeade8a31070ce09c8c9f66b01a020b1a"><div class="ttname"><a href="classRecette.html#aeade8a31070ce09c8c9f66b01a020b1a">Recette::Recette</a></div><div class="ttdeci">Recette()</div><div class="ttdoc">Constructeur.</div><div class="ttdef"><b>Definition:</b> recette.cpp:17</div></div>
+<div class="ttc" id="aclassRecette_html_af8476cc52694470058f09f870fda2247"><div class="ttname"><a href="classRecette.html#af8476cc52694470058f09f870fda2247">Recette::getTemps</a></div><div class="ttdeci">QStringList getTemps()</div><div class="ttdoc">Fonction qui renvoie le temps d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:91</div></div>
+<div class="ttc" id="aclassRecette_html_abc4194b5f6cf2bab0204cbb40f230545"><div class="ttname"><a href="classRecette.html#abc4194b5f6cf2bab0204cbb40f230545">Recette::setURL</a></div><div class="ttdeci">void setURL(const QStringList &amp;)</div><div class="ttdoc">Fonction qui modifie l'URL d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:175</div></div>
 <div class="ttc" id="aclassRecette_html_a123d128adbeb6b13de4b6317f2fb3377"><div class="ttname"><a href="classRecette.html#a123d128adbeb6b13de4b6317f2fb3377">Recette::getEtape</a></div><div class="ttdeci">QStringList getEtape(int)</div><div class="ttdoc">Fonction qui renvoie une étape d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:53</div></div>
-<div class="ttc" id="aclassRecette_html_a0ca2be9a0f1b7b5ad8e18dbd8fae37d8"><div class="ttname"><a href="classRecette.html#a0ca2be9a0f1b7b5ad8e18dbd8fae37d8">Recette::getIngredient</a></div><div class="ttdeci">QStringList getIngredient()</div><div class="ttdoc">Fonction qui renvoie la liste des ingrédient d'une recette.</div><div class="ttdef"><b>Definition:</b> Recette.cpp:12</div></div>
+<div class="ttc" id="aclassRecette_html_a0ec2fb66c754dd35e67624a9bacf7266"><div class="ttname"><a href="classRecette.html#a0ec2fb66c754dd35e67624a9bacf7266">Recette::getEtapes</a></div><div class="ttdeci">QStringList getEtapes()</div><div class="ttdoc">Fonction qui renvoie la liste des étapes d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:67</div></div>
+<div class="ttc" id="aclassRecette_html_a0ca2be9a0f1b7b5ad8e18dbd8fae37d8"><div class="ttname"><a href="classRecette.html#a0ca2be9a0f1b7b5ad8e18dbd8fae37d8">Recette::getIngredient</a></div><div class="ttdeci">QStringList getIngredient()</div><div class="ttdoc">Fonction qui renvoie la liste des ingrédient d'une recette.</div><div class="ttdef"><b>Definition:</b> recette.cpp:40</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Généré par &#160;<a href="http://www.doxygen.org/index.html">

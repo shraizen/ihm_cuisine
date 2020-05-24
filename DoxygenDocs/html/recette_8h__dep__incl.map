@@ -1,9 +1,10 @@
 <map id="recette.h" name="recette.h">
-<area shape="rect" id="node1" title="Recette de cuisine." alt="" coords="174,5,254,32"/>
-<area shape="rect" id="node2" href="$lectureJSON_8h.html" title="lecture d&#39;un fichier JSON" alt="" coords="93,80,204,107"/>
-<area shape="rect" id="node6" href="$traitement_8h.html" title="Traitement des données du programme." alt="" coords="228,80,331,107"/>
-<area shape="rect" id="node3" href="$lectureJSON_8cpp.html" title="Programme permettant la lecture d&#39;un fichier JSON." alt="" coords="5,155,132,181"/>
-<area shape="rect" id="node4" href="$mainwindow_8h.html" title="implémentation de la fenetre principal (MainWindow)" alt="" coords="156,155,272,181"/>
-<area shape="rect" id="node5" href="$main_8cpp.html" title="Programme principal." alt="" coords="173,229,255,256"/>
-<area shape="rect" id="node7" href="$traitement_8cpp.html" title="Programme permettant de traiter les données du programme." alt="" coords="296,155,415,181"/>
+<area shape="rect" id="node1" title="Recette de cuisine." alt="" coords="235,5,315,32"/>
+<area shape="rect" id="node2" href="$traitement_8h.html" title="Traitement des données du programme." alt="" coords="163,80,265,107"/>
+<area shape="rect" id="node8" href="$recette_8cpp.html" title="Programme permettant de stocker et modifier une recette." alt="" coords="289,80,384,107"/>
+<area shape="rect" id="node3" href="$lectureJSON_8h.html" title="lecture d&#39;un fichier JSON" alt="" coords="65,155,176,181"/>
+<area shape="rect" id="node5" href="$mainwindow_8h.html" title="implémentation de la fenetre principal (MainWindow)" alt="" coords="156,229,272,256"/>
+<area shape="rect" id="node7" href="$traitement_8cpp.html" title="Programme permettant de traiter les données du programme." alt="" coords="252,155,371,181"/>
+<area shape="rect" id="node4" href="$lectureJSON_8cpp.html" title="Programme permettant la lecture d&#39;un fichier JSON." alt="" coords="5,229,132,256"/>
+<area shape="rect" id="node6" href="$main_8cpp.html" title="Programme principal." alt="" coords="173,304,255,331"/>
 </map>

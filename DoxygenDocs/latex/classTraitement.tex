@@ -13,7 +13,9 @@ classe permettant de traiter les données du programme
 \begin{DoxyCompactItemize}
 \item 
 Q\+String\+List \mbox{\hyperlink{classTraitement_a215ce59a065e44348dad0586e3547a27}{traitement\+Vue\+Temps}} (Q\+String\+List)
-\begin{DoxyCompactList}\small\item\em Fonction qui renvoie le temps sous forme compréhensible et lisible. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Fonction qui renvoie le temps sous forme compréhensible et lisible. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classTraitement_a2b46734d48d5f3c6fe8bc04f548c7a18}{traitement\+Nombre\+Json}} (Q\+Json\+Object, Q\+String)
+\begin{DoxyCompactList}\small\item\em Fonction qui traite un nombre d\textquotesingle{}un fichier Json pour le recupérer dans un double. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Fonctions membres publiques}
 \begin{DoxyCompactItemize}
 \item 
@@ -40,6 +42,26 @@ Fonction de création d\textquotesingle{}une instance de la classe \mbox{\hyperl
 Constructeur de la classe \mbox{\hyperlink{classTraitement}{Traitement}} 
 
 \doxysubsection{Documentation des fonctions membres}
+\mbox{\Hypertarget{classTraitement_a2b46734d48d5f3c6fe8bc04f548c7a18}\label{classTraitement_a2b46734d48d5f3c6fe8bc04f548c7a18}} 
+\index{Traitement@{Traitement}!traitementNombreJson@{traitementNombreJson}}
+\index{traitementNombreJson@{traitementNombreJson}!Traitement@{Traitement}}
+\doxysubsubsection{\texorpdfstring{traitementNombreJson}{traitementNombreJson}}
+{\footnotesize\ttfamily double Traitement\+::traitement\+Nombre\+Json (\begin{DoxyParamCaption}\item[{Q\+Json\+Object}]{obj,  }\item[{Q\+String}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Fonction qui traite un nombre d\textquotesingle{}un fichier Json pour le recupérer dans un double. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em obj} & qui contient un Q\+Json\+Object \\
+\hline
+{\em param} & qui contient le nom du nombre à récupérer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+double qui contient un nombre 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classTraitement_a215ce59a065e44348dad0586e3547a27}\label{classTraitement_a215ce59a065e44348dad0586e3547a27}} 
 \index{Traitement@{Traitement}!traitementVueTemps@{traitementVueTemps}}
 \index{traitementVueTemps@{traitementVueTemps}!Traitement@{Traitement}}

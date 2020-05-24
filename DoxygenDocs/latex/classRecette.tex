@@ -12,13 +12,18 @@ classe permettant de stocker et modifier une recette de cuisine
 \doxysubsection*{Fonctions membres publiques}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classRecette_aeade8a31070ce09c8c9f66b01a020b1a}\label{classRecette_aeade8a31070ce09c8c9f66b01a020b1a}} 
 \mbox{\hyperlink{classRecette_aeade8a31070ce09c8c9f66b01a020b1a}{Recette}} ()
-\begin{DoxyCompactList}\small\item\em Fonction de création d\textquotesingle{}une instance d\textquotesingle{}une classe \mbox{\hyperlink{classRecette}{Recette}}. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Constructeur. \end{DoxyCompactList}\item 
 Q\+String\+List \mbox{\hyperlink{classRecette_a0e6f487548195c1497d273c5b5e74e6a}{get\+Description}} ()
 \begin{DoxyCompactList}\small\item\em Fonction qui renvoie la description d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
 Q\+String\+List \mbox{\hyperlink{classRecette_a0ca2be9a0f1b7b5ad8e18dbd8fae37d8}{get\+Ingredient}} ()
 \begin{DoxyCompactList}\small\item\em Fonction qui renvoie la liste des ingrédient d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
+Q\+String\+List \mbox{\hyperlink{classRecette_a123d128adbeb6b13de4b6317f2fb3377}{get\+Etape}} (int)
+\begin{DoxyCompactList}\small\item\em Fonction qui renvoie une étape d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
+Q\+String\+List \mbox{\hyperlink{classRecette_a0ec2fb66c754dd35e67624a9bacf7266}{get\+Etapes}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui renvoie la liste des étapes d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
+Q\+String\+List \mbox{\hyperlink{classRecette_a93a1016492f01e02d77179eff5290354}{get\+Information}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui renvoie les informations complémentaires d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
 Q\+String\+List \mbox{\hyperlink{classRecette_af8476cc52694470058f09f870fda2247}{get\+Temps}} ()
 \begin{DoxyCompactList}\small\item\em Fonction qui renvoie le temps d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
 Q\+String\+List \mbox{\hyperlink{classRecette_a17fc301a158f92d273a642e67c1d34ef}{get\+U\+RL}} ()
@@ -27,40 +32,15 @@ void \mbox{\hyperlink{classRecette_a750a78578d2a6e8162ee4f582df5a7ce}{set\+Descr
 \begin{DoxyCompactList}\small\item\em Fonction qui modifie la description d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classRecette_aae4470bc62e7256c7368875fd2cfba1a}{set\+Ingredient}} (const Q\+String\+List \&)
 \begin{DoxyCompactList}\small\item\em Fonction qui modifie la liste des ingrédients d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRecette_a2264a838e6fd32957769fd1b18cb8bdf}{set\+Etape}} (const Q\+String\+List \&)
+\begin{DoxyCompactList}\small\item\em Fonction qui modifie la liste des étapes d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classRecette_a69dc436423c21f3f11939ddf3d2ca235}\label{classRecette_a69dc436423c21f3f11939ddf3d2ca235}} 
+void {\bfseries set\+Information} (const Q\+String\+List \&)
+\item 
 void \mbox{\hyperlink{classRecette_a0b5ee282b2d49cf56844fe5620fe2280}{set\+Temps}} (const Q\+String\+List \&)
 \begin{DoxyCompactList}\small\item\em Fonction qui modifie le temps d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classRecette_abc4194b5f6cf2bab0204cbb40f230545}{set\+U\+RL}} (const Q\+String\+List \&)
-\begin{DoxyCompactList}\small\item\em Fonction qui modifie l\textquotesingle{}U\+RL d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classRecette_aeade8a31070ce09c8c9f66b01a020b1a}{Recette}} ()
-\begin{DoxyCompactList}\small\item\em Constructeur. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classRecette_a0e6f487548195c1497d273c5b5e74e6a}\label{classRecette_a0e6f487548195c1497d273c5b5e74e6a}} 
-Q\+String\+List {\bfseries get\+Description} ()
-\item 
-\mbox{\Hypertarget{classRecette_a0ca2be9a0f1b7b5ad8e18dbd8fae37d8}\label{classRecette_a0ca2be9a0f1b7b5ad8e18dbd8fae37d8}} 
-Q\+String\+List {\bfseries get\+Ingredient} ()
-\item 
-Q\+String\+List \mbox{\hyperlink{classRecette_a123d128adbeb6b13de4b6317f2fb3377}{get\+Etape}} (int)
-\begin{DoxyCompactList}\small\item\em Fonction qui renvoie une étape d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classRecette_af8476cc52694470058f09f870fda2247}\label{classRecette_af8476cc52694470058f09f870fda2247}} 
-Q\+String\+List {\bfseries get\+Temps} ()
-\item 
-\mbox{\Hypertarget{classRecette_a17fc301a158f92d273a642e67c1d34ef}\label{classRecette_a17fc301a158f92d273a642e67c1d34ef}} 
-Q\+String\+List {\bfseries get\+U\+RL} ()
-\item 
-\mbox{\Hypertarget{classRecette_a750a78578d2a6e8162ee4f582df5a7ce}\label{classRecette_a750a78578d2a6e8162ee4f582df5a7ce}} 
-void {\bfseries set\+Description} (const Q\+String\+List \&)
-\item 
-\mbox{\Hypertarget{classRecette_aae4470bc62e7256c7368875fd2cfba1a}\label{classRecette_aae4470bc62e7256c7368875fd2cfba1a}} 
-void {\bfseries set\+Ingredient} (const Q\+String\+List \&)
-\item 
-void \mbox{\hyperlink{classRecette_a2264a838e6fd32957769fd1b18cb8bdf}{set\+Etape}} (const Q\+String\+List \&)
-\begin{DoxyCompactList}\small\item\em Fonction qui modifie la liste des étapes d\textquotesingle{}une recette. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classRecette_a0b5ee282b2d49cf56844fe5620fe2280}\label{classRecette_a0b5ee282b2d49cf56844fe5620fe2280}} 
-void {\bfseries set\+Temps} (const Q\+String\+List \&)
-\item 
-\mbox{\Hypertarget{classRecette_abc4194b5f6cf2bab0204cbb40f230545}\label{classRecette_abc4194b5f6cf2bab0204cbb40f230545}} 
-void {\bfseries set\+U\+RL} (const Q\+String\+List \&)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Fonction qui modifie l\textquotesingle{}U\+RL d\textquotesingle{}une recette. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Description détaillée}
@@ -76,6 +56,8 @@ classe permettant de stocker et modifier une recette de cuisine
 
 
 Constructeur. 
+
+Fonction de création d\textquotesingle{}une instance d\textquotesingle{}une classe \mbox{\hyperlink{classRecette}{Recette}}.
 
 Constructeur de la classe \mbox{\hyperlink{classRecette}{Recette}} 
 
@@ -110,6 +92,32 @@ Fonction qui renvoie une étape d\textquotesingle{}une recette.
 \end{DoxyParams}
 \begin{DoxyReturn}{Renvoie}
 Q\+String\+List qui contient une étape d\textquotesingle{}une recette 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRecette_a0ec2fb66c754dd35e67624a9bacf7266}\label{classRecette_a0ec2fb66c754dd35e67624a9bacf7266}} 
+\index{Recette@{Recette}!getEtapes@{getEtapes}}
+\index{getEtapes@{getEtapes}!Recette@{Recette}}
+\doxysubsubsection{\texorpdfstring{getEtapes()}{getEtapes()}}
+{\footnotesize\ttfamily Q\+String\+List Recette\+::get\+Etapes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui renvoie la liste des étapes d\textquotesingle{}une recette. 
+
+\begin{DoxyReturn}{Renvoie}
+Q\+String\+List qui contient la liste des étapes d\textquotesingle{}une recette 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRecette_a93a1016492f01e02d77179eff5290354}\label{classRecette_a93a1016492f01e02d77179eff5290354}} 
+\index{Recette@{Recette}!getInformation@{getInformation}}
+\index{getInformation@{getInformation}!Recette@{Recette}}
+\doxysubsubsection{\texorpdfstring{getInformation()}{getInformation()}}
+{\footnotesize\ttfamily Q\+String\+List Recette\+::get\+Information (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui renvoie les informations complémentaires d\textquotesingle{}une recette. 
+
+\begin{DoxyReturn}{Renvoie}
+Q\+String\+List qui contient les informations complémentaires d\textquotesingle{}une recette 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classRecette_a0ca2be9a0f1b7b5ad8e18dbd8fae37d8}\label{classRecette_a0ca2be9a0f1b7b5ad8e18dbd8fae37d8}} 
 \index{Recette@{Recette}!getIngredient@{getIngredient}}
@@ -229,5 +237,5 @@ Fonction qui modifie l\textquotesingle{}U\+RL d\textquotesingle{}une recette.
 
 La documentation de cette classe a été générée à partir des fichiers suivants \+:\begin{DoxyCompactItemize}
 \item 
-Recette.\+h\item 
-Recette.\+cpp\end{DoxyCompactItemize}
+\mbox{\hyperlink{recette_8h}{recette.\+h}}\item 
+\mbox{\hyperlink{recette_8cpp}{recette.\+cpp}}\end{DoxyCompactItemize}
