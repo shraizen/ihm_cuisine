@@ -29,72 +29,77 @@ LectureJSON::LectureJSON()
 
 void LectureJSON::Lecture(QString nomFichier, Recette& R)
 {
+    /// Déclaration de variables
+    QFile fichier(nomFichier);
+    QJsonParseError error;
+    QString texteAAfficher;
 
-    QFile fichier(nomFichier);                          // || Déclaration de variables
-    QJsonParseError error;                              // ||
-    QString texteAAfficher;                             // \/
+    if(fichier.open(QFile::ReadOnly)) {                                                       ///test la lecture du fichier
 
-    if(fichier.open(QFile::ReadOnly)) {                                                       //test la lecture du fichier
+       QByteArray donnees = fichier.readAll();                                                /// Récupération du document JSON et de son contenu
+       QJsonDocument doc = QJsonDocument::fromJson(donnees, &error);
 
-       QByteArray donnees = fichier.readAll();                                                // || Récupération du document JSON et de son contenu
-       QJsonDocument doc = QJsonDocument::fromJson(donnees, &error);                          // \/
-
-       if(error.error != QJsonParseError::NoError)                                            // || Si la récupération des données contient une erreur
-       {                                                                                      // ||
-           qCritical() << "Impossible d’interpréter le fichier : " << error.errorString();    // ||
-       }                                                                                      // \/
-       else                                                                                   // Sinon :
+       if(error.error != QJsonParseError::NoError)                                            /// Si la récupération des données contient une erreur
        {
+           qCritical() << "Impossible d’interpréter le fichier : " << error.errorString();
+       }
+       else                                                                                   /// Sinon :
+       {
+           /// Déclaration de variables
+           QJsonObject obj=doc.object();
+           QJsonValue val = obj.value("recipeIngredient");
+           QStringList listeDescription;
+           QStringList listeIngredient;
+           QStringList listeEtape;
+           QStringList listeInformation;
+           QStringList temps ;
+           QStringList URL;
+           QJsonArray valArray = val.toArray();
 
-           QJsonObject obj=doc.object();                                                      // || Déclaration de variables
-           QJsonValue val = obj.value("recipeIngredient");                                    // ||
-           QStringList listeDescription;                                                      // ||
-           QStringList listeIngredient;                                                       // ||
-           QStringList listeEtape;                                                            // ||
-           QStringList listeInformation;                                                      // ||
-           QStringList temps ;                                                                // ||
-           QStringList URL;                                                                   // ||
-           QJsonArray valArray = val.toArray();                                               // \/
-
-
+           ///Récupère la description
            listeDescription << "\n" + (obj.value("name")).toString() + "\n"
-                            << "\nDescription : \n" << (obj.value("description")).toString(); //Récupère la description
+                            << "\nDescription : \n" << (obj.value("description")).toString();
 
-           listeIngredient << "Ingredients : \n";                                             // || Récupère les ingrédient
-           for (auto value: valArray)                                                         // ||
-           {                                                                                  // ||
-               listeIngredient << "_ " + value.toString();                                    // ||
-           }                                                                                  // \/
+           /// Récupère les ingrédient
+           listeIngredient << "Ingredients : \n";
+           for (auto value: valArray)
+           {
+               listeIngredient << "_ " + value.toString();
+           }
 
-           val = obj.value("recipeInstructions");                                                     // || Récupère les instructions
-           valArray = val.toArray();                                                                  // ||
-           int compteur = 0;                                                                          // ||
-           for (auto value: valArray)                                                                 // ||
-           {                                                                                          // ||
-               compteur ++;                                                                           // ||
-               listeEtape << "instruction n°" + QString::number(compteur) + " :\n" + value.toString();// ||
-           }                                                                                          // \/
+           /// Récupère les instructions
+           val = obj.value("recipeInstructions");
+           valArray = val.toArray();
+           int compteur = 0;
+           for (auto value: valArray)
+           {
+               compteur ++;
+               listeEtape << "instruction n°" + QString::number(compteur) + " :\n" + value.toString();
+           }
 
-           listeInformation << "Image : " << (obj.value("image")).toString();                           // || Récupère les informations complémentaires
-           listeInformation << "Catégorie de recette : " << (obj.value("recipeCategory")).toString();   // ||
-           listeInformation << "Tag : " << (obj.value("keywords")).toString();                          // ||
-           double tmp = Trait.traitementNombreJson(obj, "recipeYield");                                 // ||
-           listeInformation << "Rendement estimé : " << QString::number(tmp) + " €";                    // \/
+           /// Récupère les informations complémentaires
+           listeInformation << "Image : " << (obj.value("image")).toString();
+           listeInformation << "Catégorie de recette : " << (obj.value("recipeCategory")).toString();
+           listeInformation << "Tag : " << (obj.value("keywords")).toString();
+           double tmp = Trait.traitementNombreJson(obj, "recipeYield");
+           listeInformation << "Rendement estimé : " << QString::number(tmp) + " €";
 
-           temps << (obj.value("prepTime")).toString();                                       // ||Récupère les temps
-           temps << (obj.value("cookTime")).toString();                                       // ||
-           temps << (obj.value("totalTime")).toString();                                      // \/
-           URL << "URL : " << (obj.value("url")).toString();                                  // Récupère l'URL
+           /// Récupère les temps
+           temps << (obj.value("prepTime")).toString();
+           temps << (obj.value("cookTime")).toString();
+           temps << (obj.value("totalTime")).toString();
+           URL << "URL : " << (obj.value("url")).toString();
 
-           R.setDescription(listeDescription);                                                // || Met à jour les données de la recette
-           R.setIngredient(listeIngredient);                                                  // ||
-           R.setEtape(listeEtape);                                                            // ||
-           R.setInformation(listeInformation);                                                // ||
-           R.setTemps(temps);                                                                 // ||
-           R.setURL(URL);                                                                     // \/
+           /// Met à jour les données de la recette
+           R.setDescription(listeDescription);
+           R.setIngredient(listeIngredient);
+           R.setEtape(listeEtape);
+           R.setInformation(listeInformation);
+           R.setTemps(temps);
+           R.setURL(URL);
        }
     }
     else {
-        qCritical() << "Impossible d’ouvrir le fichier : " << error.errorString();
+        qCritical() << "Impossible d’ouvrir le fichier : " << error.errorString(); ///Erreur de lecture du fichier
     }
 }

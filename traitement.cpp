@@ -28,24 +28,28 @@ Traitement::Traitement()
 
 QStringList Traitement::traitementVueTemps(QStringList temps)
 {
-    QString tempsPreparation = temps[0];                                                                 // Récupère le temps de préparation
-    QString tempsCuisson = temps[1];                                                                     // Récupère le temps de cuisson
-    int tempsTotalHeures;                                                                                // Choix de le calculer car le temps total n'est pas toujours spécifié
-    int tempsTotalMinutes;                                                                               // Choix de le calculer car le temps total n'est pas toujours spécifié
+    QString tempsPreparation = temps[0];                                                                 /// Récupère le temps de préparation
+    QString tempsCuisson = temps[1];                                                                     /// Récupère le temps de cuisson
+    int tempsTotalHeures;                                                                                /// Choix de le calculer car le temps total n'est pas toujours spécifié
+    int tempsTotalMinutes;                                                                               /// Choix de le calculer car le temps total n'est pas toujours spécifié
     QStringList TexteVueTemps;
-    QRegExp CalcHeures("([0-9]*)H");                                                                     // Expréssion régulière pour récupérer les heures
-    QRegExp CalcMinutes("([0-9]*)M");                                                                    // Expréssion régulière pour récupérer les minutes
-    CalcMinutes.indexIn(tempsPreparation);                                                                                                      // || Récupère le temps de préparation
-    CalcHeures.indexIn(tempsPreparation);                                                                                                       // ||
-    TexteVueTemps << "  Temps de Préparation : " + CalcHeures.cap(1) + " heures et " + CalcMinutes.cap(1) + " minutes  ";                       // \/
-    tempsTotalHeures = (CalcHeures.cap(1)).toInt();        // || Pour calculer le temps total
-    tempsTotalMinutes = (CalcMinutes.cap(1)).toInt();      // \/
-    CalcMinutes.indexIn(tempsCuisson);                                                                                                          // || Récupère le temps de cuisson
-    CalcHeures.indexIn(tempsCuisson);                                                                                                           // ||
-    TexteVueTemps << "  Temps de Cuisson : " + CalcHeures.cap(1) + " heures et " + CalcMinutes.cap(1) + " minutes  ";                           // \/
-    tempsTotalHeures += (CalcHeures.cap(1)).toInt();       // || Pour calculer le temps total
-    tempsTotalMinutes += (CalcMinutes.cap(1)).toInt();     // \/
-    TexteVueTemps << "  Temps total : " + QString::number(tempsTotalHeures) + " heures et " + QString::number(tempsTotalMinutes) + " minutes  ";// Récupère le temps total
+    QRegExp CalcHeures("([0-9]*)H");                                                                     /// Expréssion régulière pour récupérer les heures
+    QRegExp CalcMinutes("([0-9]*)M");                                                                    /// Expréssion régulière pour récupérer les minutes
+    /// Récupère le temps de préparation
+    CalcMinutes.indexIn(tempsPreparation);
+    CalcHeures.indexIn(tempsPreparation);
+    TexteVueTemps << "  Temps de Préparation : " + CalcHeures.cap(1) + " heures et " + CalcMinutes.cap(1) + " minutes  ";
+    /// Pour calculer le temps total
+    tempsTotalHeures = (CalcHeures.cap(1)).toInt();
+    tempsTotalMinutes = (CalcMinutes.cap(1)).toInt();
+    /// Récupère le temps de cuisson
+    CalcMinutes.indexIn(tempsCuisson);
+    CalcHeures.indexIn(tempsCuisson);
+    TexteVueTemps << "  Temps de Cuisson : " + CalcHeures.cap(1) + " heures et " + CalcMinutes.cap(1) + " minutes  ";
+    /// Calcule le temps total
+    tempsTotalHeures += (CalcHeures.cap(1)).toInt();
+    tempsTotalMinutes += (CalcMinutes.cap(1)).toInt();
+    TexteVueTemps << "  Temps total : " + QString::number(tempsTotalHeures) + " heures et " + QString::number(tempsTotalMinutes) + " minutes  ";/// Récupère le temps total
     return(TexteVueTemps);
 }
 
@@ -60,18 +64,8 @@ QStringList Traitement::traitementVueTemps(QStringList temps)
 
 double Traitement::traitementNombreJson(QJsonObject obj, QString param)
 {
-    QJsonValue recipeYield = obj.value(param);
-    int result = 0;
-    double tmp = recipeYield.toDouble();
-    if (tmp >= std::numeric_limits<int>::min() &&
-        tmp <= std::numeric_limits<int>::max() &&
-        std::floor(tmp) == tmp) 
-    {
-        result = std::floor(tmp);
-        tmp = result;
-    }
-    else {
-    }
-    return(tmp);
+    QJsonValue recipeYield = obj.value(param);   /// Création d'une QJsonValue contenant le valeur du paramètre indiquer (param)
+    double tmp = recipeYield.toDouble();        /// Convertie la valeur en double
+    return(tmp);                                /// Renvoie un double
 }
 

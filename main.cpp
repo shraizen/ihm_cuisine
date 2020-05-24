@@ -20,9 +20,9 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);    // || Création de l'application et affichage d'une fenetre MainWindow
-    MainWindow w;                  // ||
-    w.show();                      // ||
-                                   // ||
-    return a.exec();               // \/     // (boucle)
+    QApplication a(argc, argv);    /// Création de l'application
+    MainWindow w;                  /// Création d'une instance de MainWindow
+    w.show();                      /// Affichage d'une fenetre MainWindow
+
+    return a.exec();               /// (boucle)
 }

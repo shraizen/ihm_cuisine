@@ -22,8 +22,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-/*! \class LectureJSON
-   * \brief classe permettant la lecture d'un fichier JSON
+/*! \class MainWindow
+   * \brief classe permettant la création d'une fenetre principal
    *
    */
 

@@ -27,7 +27,7 @@ Recette::Recette()
 
 QStringList Recette::getDescription()
 {
-    return(Description);  // Renvoie le temps
+    return(Description);  /// Renvoie le temps
 }
 
 /**
@@ -39,7 +39,7 @@ QStringList Recette::getDescription()
 
 QStringList Recette::getIngredient()
 {
-    return(Ingredient);  // Renvoie les ingrédients
+    return(Ingredient);  /// Renvoie les ingrédients
 }
 
 /**
@@ -54,7 +54,7 @@ QStringList Recette::getEtape(int numero)
 {
     QStringList EtapeAAfficher;
     EtapeAAfficher << Etapes.at(numero);
-    return(EtapeAAfficher);
+    return(EtapeAAfficher);   /// Renvoie une étape précise
 }
 
 /**
@@ -66,7 +66,7 @@ QStringList Recette::getEtape(int numero)
 
 QStringList Recette::getEtapes()
 {
-    return(Etapes);
+    return(Etapes);  /// Renvoie les étapes
 }
 
 /**
@@ -78,7 +78,7 @@ QStringList Recette::getEtapes()
 
 QStringList Recette::getInformation()
 {
-    return(Informations);
+    return(Informations);  /// Renvoie les informations
 }
 
 /**
@@ -90,7 +90,7 @@ QStringList Recette::getInformation()
 
 QStringList Recette::getTemps()
 {
-    return(Temps);  // Renvoie le temps
+    return(Temps);  /// Renvoie le temps
 }
 
 /**
@@ -102,7 +102,7 @@ QStringList Recette::getTemps()
 
 QStringList Recette::getURL()
 {
-    return(URL);  // Renvoie l'URL
+    return(URL);  /// Renvoie l'URL
 }
 
 /**
@@ -114,7 +114,7 @@ QStringList Recette::getURL()
 
 void Recette::setDescription(const QStringList& v)
 {
-    Description << v;  // Définie une description
+    Description << v;  /// Définie une description
 }
 
 /**
@@ -126,7 +126,7 @@ void Recette::setDescription(const QStringList& v)
 
 void Recette::setIngredient(const QStringList& v)
 {
-    Ingredient << v;  // Définie des ingrédients
+    Ingredient << v;  /// Définie des ingrédients
 }
 
 /**
@@ -138,7 +138,7 @@ void Recette::setIngredient(const QStringList& v)
 
 void Recette::setEtape(const QStringList& v)
 {
-    Etapes << v;
+    Etapes << v;   /// Définie des étapes
 }
 
 /**
@@ -150,7 +150,7 @@ void Recette::setEtape(const QStringList& v)
 
 void Recette::setInformation(const QStringList& v)
 {
-    Informations << v;
+    Informations << v;   /// Définie des informations
 }
 
 /**
@@ -162,7 +162,7 @@ void Recette::setInformation(const QStringList& v)
 
 void Recette::setTemps(const QStringList& v)
 {
-    Temps << v;  // Définie un temps
+    Temps << v;  /// Définie un temps
 }
 
 /**
@@ -174,5 +174,5 @@ void Recette::setTemps(const QStringList& v)
 
 void Recette::setURL(const QStringList& v)
 {
-    URL << v;  // Définie un url
+    URL << v;  /// Définie un url
 }

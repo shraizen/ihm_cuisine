@@ -21,21 +21,18 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    // Lance la fonction MenuSetup()
-    MenuSetup();
-    //Mise en place d'un texte "glisser et déposer"
+    MenuSetup();                                                                     /// Lance la fonction MenuSetup()
+    /// Mise en place d'un texte "glisser et déposer"
     label = new QLabel();
     label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
     label->setText("glisser et déposer possible");
     label->setFont(titre);
     label->setAlignment(Qt::AlignCenter);
     setCentralWidget(label);
-    //Geometrie de la fenetre
-    setGeometry(500,300,800,559);
-    //autorise le depot de fichier
-    setAcceptDrops(true);
-    // Détection qu'un fichier est trouvé et lecture du fichier
-    connect(this,SIGNAL(fichierTrouver(QString)),this,SLOT(LectureFichier(QString)));
+
+    setGeometry(500,300,800,559);                                                     /// Geometrie de la fenetre
+    setAcceptDrops(true);                                                             /// Autorise le depot de fichier
+    connect(this,SIGNAL(fichierTrouver(QString)),this,SLOT(LectureFichier(QString))); /// Détection qu'un fichier est trouvé et lecture du fichier
 }
 
 /**
@@ -46,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui;    //Supprime l'UI
+    delete ui;    ///Supprime l'UI
 }
 
 /**
@@ -57,29 +54,29 @@ MainWindow::~MainWindow()
 
 void MainWindow::MachineSetup()
 {
-    machine = new QStateMachine(this);
-    QList<QState*> Listetat;
-    ui->tempLabel->hide();
-    for(int i = 0; i <= R.getEtapes().size()-1; i++)
+    machine = new QStateMachine(this);                                   /// Création d'une instance de QStateMachine
+    QList<QState*> Listetat;                                             /// Création d'une liste d'états
+    ui->tempLabel->hide();                                               /// Cache le label nommé "teamLabel"
+    for(int i = 0; i <= R.getEtapes().size()-1; i++)                     /// Repete la boucle autant de fois que d'étapes
     {
-        QState *etat = new QState();
-        etat->assignProperty(ui->tempLabel, "text", R.getEtape(i));
-        machine->addState(etat);
-        Listetat.append(etat);
-        if(i==0)
+        QState *etat = new QState();                                     /// Allocation dynamique d'un etat
+        etat->assignProperty(ui->tempLabel, "text", R.getEtape(i));      /// L'état créer prend une étape
+        machine->addState(etat);                                         /// L'état est ajouté à la machine
+        Listetat.append(etat);                                           /// La liste d'état rajoute l'état créer
+        if(i==0)                                                         /// Si c'est la première fois que l'on parcours la boucle, alors :
         {
-            machine->setInitialState(etat);
+            machine->setInitialState(etat);                              /// L'état devient l'état initial
         }
     }
-    for(int i = 0; i <= R.getEtapes().size()-1; i++)
+    for(int i = 0; i <= R.getEtapes().size()-1; i++)                     /// Repete la boucle autant de fois que d'étapes
     {
-        if (i!=0)
-            Listetat[i]->addTransition(ui->boutonGauche, SIGNAL(clicked()),Listetat[i-1]);
-        if (i!=R.getEtapes().size()-1)
-            Listetat[i]->addTransition(ui->boutonDroite, SIGNAL(clicked()),Listetat[i+1]);
+        if (i!=0)                                                        /// Si ce n'est pas la première fois que l'on parcours la boucle, alors :
+            Listetat[i]->addTransition(ui->boutonGauche, SIGNAL(clicked()),Listetat[i-1]);  /// Ajoute la transition qui passe à l'étape précédente
+        if (i!=R.getEtapes().size()-1)                                   /// Si ce n'est pas la dernière fois que l'on parcours la boucle, alors :
+            Listetat[i]->addTransition(ui->boutonDroite, SIGNAL(clicked()),Listetat[i+1]);  /// Ajoute la transition qui passe à l'étape suivante
         connect(Listetat[i], SIGNAL(entered()), this, SLOT(AfficherEtape()));
     }
-    machine->start();
+    machine->start();                                                   /// Lancement de la machine
 }
 
 /**
@@ -90,12 +87,12 @@ void MainWindow::MachineSetup()
 
 void MainWindow::MenuSetup()
 {
-    ui->setupUi(this);                                                                      // Initialise l'interface
-    QMenu *fileMenu = new QMenu(tr("&Fichier"), this);                                      // Création d'un menu Fichier sur le mainWindow
-    menuBar()->addMenu(fileMenu);                                                           // Affectation de ce menu à la bar de menu
+    ui->setupUi(this);                                                                      /// Initialise l'interface
+    QMenu *fileMenu = new QMenu(tr("&Fichier"), this);                                      /// Création d'un menu Fichier sur le mainWindow
+    menuBar()->addMenu(fileMenu);                                                           /// Affectation de ce menu à la bar de menu
 
-    fileMenu->addAction(tr("&Ouvrir..."), this, SLOT(OuvrirFichier()),QKeySequence::Open);  // Création d'un bouton Ouvrir sur le menu, qui lance la fonction ouvrirfichier()
-    fileMenu->addAction(tr("&Quitter"), qApp, SLOT(quit()),QKeySequence::Quit);             // Création d'un bouton Quitter sur le menu, qui lance la fonction quit()
+    fileMenu->addAction(tr("&Ouvrir..."), this, SLOT(OuvrirFichier()),QKeySequence::Open);  /// Création d'un bouton Ouvrir sur le menu, qui lance la fonction ouvrirfichier()
+    fileMenu->addAction(tr("&Quitter"), qApp, SLOT(quit()),QKeySequence::Quit);             /// Création d'un bouton Quitter sur le menu, qui lance la fonction quit()
 }
 
 /**
@@ -106,20 +103,20 @@ void MainWindow::MenuSetup()
 
 void MainWindow::TabInfoCompSetup()
 {
-    ui->tableInformations->setColumnCount(2);
-    ui->tableInformations->setRowCount(4);
-    ui->tableInformations->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableInformations->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableInformations->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->tableInformations->resizeColumnToContents(1);
-    ui->tableInformations->horizontalHeader()->setStretchLastSection(true);
-    ui->tableInformations->horizontalHeader()->setVisible(true);
-    ui->tableInformations->verticalHeader()->setVisible(false);
-    connect(ui->tableInformations->horizontalHeader(),SIGNAL(sectionResized(int, int, int)),ui->tableInformations,SLOT(resizeRowsToContents()));
-    AfficherInformation();
-    for(int i = 0 ; i < ui->tableInformations->rowCount() ; i++)
+    ui->tableInformations->setColumnCount(2);                                     /// Ajoute 2 collones au tableau
+    ui->tableInformations->setRowCount(4);                                        /// Ajoute 4 lignes au tableau
+    ui->tableInformations->setEditTriggers(QAbstractItemView::NoEditTriggers);    /// Empèche l'utilisateur de modifier une case du tableau
+    ui->tableInformations->setSelectionBehavior(QAbstractItemView::SelectRows);   /// Permet à l'utilisateur de ne selectionner que les lignes
+    ui->tableInformations->setSelectionMode(QAbstractItemView::SingleSelection);  /// Empèche l'utilisateur de sélectionner plus d'une ligne du tableau
+    ui->tableInformations->resizeColumnToContents(1);                             /// Ajuste la taille des case au contenu de la première colonne
+    ui->tableInformations->horizontalHeader()->setStretchLastSection(true);       /// Permet à l'utilisateur d'élargir les colonne
+    ui->tableInformations->horizontalHeader()->setVisible(true);                  /// Affiche les titres de colonnes
+    ui->tableInformations->verticalHeader()->setVisible(false);                   /// Cache les titres de lignes
+    connect(ui->tableInformations->horizontalHeader(),SIGNAL(sectionResized(int, int, int)),ui->tableInformations,SLOT(resizeRowsToContents()));  /// Ajuste constamment la taille des case au contenu de la première colonne
+    AfficherInformation();                                                        /// Affiche la liste des informations complémentaires
+    for(int i = 0 ; i < ui->tableInformations->rowCount() ; i++)                  /// Repete la boucle atant de fois qu'il y a de lignes
     {
-        ui->tableInformations->item(i,0)->setFont(style4);
+        ui->tableInformations->item(i,0)->setFont(style4);                        /// Ajoute un font au texte dans les première case des lignes
     }
 }
 
@@ -132,7 +129,7 @@ void MainWindow::TabInfoCompSetup()
 
 void MainWindow::setRecette(Recette newRecette)
 {
-    R = newRecette;
+    R = newRecette;                 /// Ajoute une nouvelle recette
 }
 
 /**
@@ -144,13 +141,13 @@ void MainWindow::setRecette(Recette newRecette)
 
 void MainWindow::LectureFichier(QString nomFichier)
 {
-    Recette newRecette;
-    setRecette(newRecette);
-    ui->setupUi(this);
-    MenuSetup();
-    JSON.Lecture(nomFichier, R);
-    MettreAJourRecette();
-    MachineSetup();
+    Recette newRecette;           /// Instancie une nouvelle recette
+    setRecette(newRecette);       /// Ajoute la recette dans le programme
+    ui->setupUi(this);            /// Instancie l'ui
+    MenuSetup();                  /// Lance la fonction de setup du menu
+    JSON.Lecture(nomFichier, R);  /// Lance la fonction qui lit le fichier JSON
+    MettreAJourRecette();         /// Lance la fonction qui met à jour la recette
+    MachineSetup();               /// Lance la fonction qui paramètre une machine
 }
 
 /**
@@ -162,11 +159,11 @@ void MainWindow::LectureFichier(QString nomFichier)
 
 void MainWindow::OuvrirFichier(const QString &path)
 {
-    QString nomFichier = path;
-    if (nomFichier.isNull())
-        nomFichier = QFileDialog::getOpenFileName(this, tr("Ouvrir le fichier"), "", tr("Fichiers JSON (*.json)"));
-    if (!nomFichier.isNull())
-        emit fichierTrouver(nomFichier);
+    QString nomFichier = path;             /// Création d'une varaiable contenant le nom du fichier
+    if (nomFichier.isNull())               /// Si le fichier n'existe pas, alors :
+        nomFichier = QFileDialog::getOpenFileName(this, tr("Ouvrir le fichier"), "", tr("Fichiers JSON (*.json)"));   ///Ouvre une fenetre de dialoque et de recherche de fichier JSON
+    if (!nomFichier.isNull())              /// Si le fichier existe, alors :
+        emit fichierTrouver(nomFichier);   /// emet le signal comme quoi le fichier est trouvé
 }
 
 /**
@@ -177,7 +174,7 @@ void MainWindow::OuvrirFichier(const QString &path)
 
 void MainWindow::AfficherDescription()
 {
-    //création du style de texte :
+    ///création du style de texte :
     ui->listeDescription->setStyleSheet(style2);
     ui->listeDescription->addItems(R.getDescription());
     ui->listeDescription->itemAt(1,0)->setTextAlignment(Qt::AlignCenter);
@@ -193,7 +190,7 @@ void MainWindow::AfficherDescription()
 
 void MainWindow::AfficherIngredient()
 {
-    //création du style de texte :
+    ///création du style de texte :
     ui->listeIngredient->setStyleSheet(style1);
     ui->listeIngredient->addItems(R.getIngredient());
     ui->listeIngredient->itemAt(1,0)->setTextAlignment(Qt::AlignCenter);
@@ -208,9 +205,9 @@ void MainWindow::AfficherIngredient()
 
 void MainWindow::AfficherEtape()
 {
-    //efface la listeEtape
+    ///efface la listeEtape
     ui->listeEtapes->clear();
-    //ajoute un item contenant l'étape courante
+    ///ajoute un item contenant l'étape courante
     ui->listeEtapes->addItem(ui->tempLabel->text());
     ui->listeEtapes->setFont(style3);
     ui->listeEtapes->itemAt(1,0)->setTextAlignment(Qt::AlignCenter);
@@ -224,9 +221,9 @@ void MainWindow::AfficherEtape()
 
 void MainWindow::AfficherInformation()
 {
-    for(int i=0;i<(ui->tableInformations->rowCount() * ui->tableInformations->columnCount());i++)
+    for(int i=0;i<(ui->tableInformations->rowCount() * ui->tableInformations->columnCount());i++)     /// Boucle qui se repete autant de fois qu'il y as de case dans le tableau
     {
-        ui->tableInformations->setItem(i/2,(i)%2,new QTableWidgetItem(R.getInformation().at(i)));
+        ui->tableInformations->setItem(i/2,(i)%2,new QTableWidgetItem(R.getInformation().at(i)));     /// Ajoute à la case, les informations qu'elle doit afficher
     }
 }
 
@@ -238,8 +235,8 @@ void MainWindow::AfficherInformation()
 
 void MainWindow::AfficherTemps()
 {
-    QStringListModel *modeleTemps = new QStringListModel(Trait.traitementVueTemps(R.getTemps()));
-    ui->VueTemps->setModel(modeleTemps);
+    QStringListModel *modeleTemps = new QStringListModel(Trait.traitementVueTemps(R.getTemps()));   /// Création d'un QStringList qui stock un modele d'affichage du temps
+    ui->VueTemps->setModel(modeleTemps);                                                            /// Ajoute le modele à l'UI
 }
 
 /**
@@ -250,8 +247,8 @@ void MainWindow::AfficherTemps()
 
 void MainWindow::AfficherURL()
 {
-    QStringListModel *modeleURL = new QStringListModel(R.getURL());
-    ui->VueURL->setModel(modeleURL);
+    QStringListModel *modeleURL = new QStringListModel(R.getURL());                             /// Création d'un QStringList qui stock un modele d'affichage de l'URL
+    ui->VueURL->setModel(modeleURL);                                                            /// Ajoute le modele à l'UI
 }
 
 /**
@@ -262,10 +259,11 @@ void MainWindow::AfficherURL()
 
 void MainWindow::MettreAJourRecette()
 {
+    /// Affiche les informations de recette
     AfficherDescription();
     AfficherIngredient();
     AfficherEtape();
-    TabInfoCompSetup();  //la fonction AfficherInformation() est appelé dans cette fonction
+    TabInfoCompSetup();  ///la fonction AfficherInformation() est appelé dans cette fonction
     AfficherTemps();
     AfficherURL();
 }
