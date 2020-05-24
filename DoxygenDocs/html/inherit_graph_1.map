@@ -1,4 +1,4 @@
 <map id="Graphe hiérarchique des classes" name="Graphe hiérarchique des classes">
 <area shape="rect" id="node1" title=" " alt="" coords="5,5,121,32"/>
-<area shape="rect" id="node2" href="$classMainWindow.html" title=" " alt="" coords="169,5,276,32"/>
+<area shape="rect" id="node2" href="$classMainWindow.html" title="classe permettant la création d&#39;une fenetre principal" alt="" coords="169,5,276,32"/>
 </map>
