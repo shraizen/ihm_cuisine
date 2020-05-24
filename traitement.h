@@ -9,21 +9,7 @@
 #ifndef TRAITEMENT_H
 #define TRAITEMENT_H
 
-#include <QMainWindow>
-#include <QTextEdit>
-#include <string>
-#include <QStringListModel>
-#include <QFileDialog>
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QDebug>
-#include <QJsonValue>
-#include <QJsonArray>
-#include <QStringListModel>
-#include <QListView>
-#include <QLabel>
-#include <QFont>
+
 #include "recette.h"
 
 /*! \class Traitement
@@ -55,6 +41,17 @@ public slots:
      */
 
     QStringList traitementVueTemps(QStringList);
+
+    /**
+     * \fn Traitement d'une données(nombre) d'un fichier JSon
+     * \brief Fonction qui traite un nombre d'un fichier Json pour le recupérer dans un double
+     *
+     * \param obj qui contient un QJsonObject
+     * \param param qui contient le nom du nombre à récupérer
+     * \return double qui contient un nombre
+     */
+
+    double traitementNombreJson(QJsonObject, QString);
 
 };
 

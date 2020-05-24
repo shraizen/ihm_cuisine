@@ -6,6 +6,7 @@
  *
  */
 
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -20,16 +21,21 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    MenuSetup();                                                                         // Lance la fonction MenuSetup()
-    numeroEtapeCourante = 0;
-    //Création d'une zone de texte accessible seulement en lecture :
-    texte = new QTextEdit;
-    texte->setReadOnly(true);
-    setCentralWidget(texte);
-    setGeometry(500,300,800,559);                                                        // Initialise la taille de la fenetre
+    // Lance la fonction MenuSetup()
+    MenuSetup();
+    //Mise en place d'un texte "glisser et déposer"
+    label = new QLabel();
+    label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    label->setText("glisser et déposer possible");
+    label->setFont(titre);
+    label->setAlignment(Qt::AlignCenter);
+    setCentralWidget(label);
+    //Geometrie de la fenetre
+    setGeometry(500,300,800,559);
+    //autorise le depot de fichier
     setAcceptDrops(true);
-    connect(this,SIGNAL(fichierTrouver(QString)),this,SLOT(LectureFichier(QString)));    // Détection qu'un fichier est trouvé et lecture du fichier
-    MachineSetup();
+    // Détection qu'un fichier est trouvé et lecture du fichier
+    connect(this,SIGNAL(fichierTrouver(QString)),this,SLOT(LectureFichier(QString)));
 }
 
 /**
@@ -52,14 +58,27 @@ MainWindow::~MainWindow()
 void MainWindow::MachineSetup()
 {
     machine = new QStateMachine(this);
-    etat = new QList<QState>;
-    for()
+    QList<QState*> Listetat;
+    ui->tempLabel->hide();
+    for(int i = 0; i <= R.getEtapes().size()-1; i++)
     {
-        machine->addState(etat->at(1));
+        QState *etat = new QState();
+        etat->assignProperty(ui->tempLabel, "text", R.getEtape(i));
+        machine->addState(etat);
+        Listetat.append(etat);
+        if(i==0)
+        {
+            machine->setInitialState(etat);
+        }
     }
-    machine->addState(etat->at(1));
-    etat->addTransition(ui->boutonDroite, SIGNAL(clicked()),etatDroite);
-    machine->setInitialState(etatGauche);
+    for(int i = 0; i <= R.getEtapes().size()-1; i++)
+    {
+        if (i!=0)
+            Listetat[i]->addTransition(ui->boutonGauche, SIGNAL(clicked()),Listetat[i-1]);
+        if (i!=R.getEtapes().size()-1)
+            Listetat[i]->addTransition(ui->boutonDroite, SIGNAL(clicked()),Listetat[i+1]);
+        connect(Listetat[i], SIGNAL(entered()), this, SLOT(AfficherEtape()));
+    }
     machine->start();
 }
 
@@ -77,6 +96,31 @@ void MainWindow::MenuSetup()
 
     fileMenu->addAction(tr("&Ouvrir..."), this, SLOT(OuvrirFichier()),QKeySequence::Open);  // Création d'un bouton Ouvrir sur le menu, qui lance la fonction ouvrirfichier()
     fileMenu->addAction(tr("&Quitter"), qApp, SLOT(quit()),QKeySequence::Quit);             // Création d'un bouton Quitter sur le menu, qui lance la fonction quit()
+}
+
+/**
+ * \fn void MainWindow::TabInfoCompSetup(Recette R)
+ * \brief Fonction de paramétrage du tableau d'affichage des information complémentaires
+ *
+ */
+
+void MainWindow::TabInfoCompSetup()
+{
+    ui->tableInformations->setColumnCount(2);
+    ui->tableInformations->setRowCount(4);
+    ui->tableInformations->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableInformations->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableInformations->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tableInformations->resizeColumnToContents(1);
+    ui->tableInformations->horizontalHeader()->setStretchLastSection(true);
+    ui->tableInformations->horizontalHeader()->setVisible(true);
+    ui->tableInformations->verticalHeader()->setVisible(false);
+    connect(ui->tableInformations->horizontalHeader(),SIGNAL(sectionResized(int, int, int)),ui->tableInformations,SLOT(resizeRowsToContents()));
+    AfficherInformation();
+    for(int i = 0 ; i < ui->tableInformations->rowCount() ; i++)
+    {
+        ui->tableInformations->item(i,0)->setFont(style4);
+    }
 }
 
 /**
@@ -106,8 +150,7 @@ void MainWindow::LectureFichier(QString nomFichier)
     MenuSetup();
     JSON.Lecture(nomFichier, R);
     MettreAJourRecette();
-    connect(etatGauche, SIGNAL(entered()), this, SLOT(AfficherEtapePrecedente()));
-    connect(etatDroite, SIGNAL(entered()), this, SLOT(AfficherEtapeSuivante()));
+    MachineSetup();
 }
 
 /**
@@ -135,12 +178,7 @@ void MainWindow::OuvrirFichier(const QString &path)
 void MainWindow::AfficherDescription()
 {
     //création du style de texte :
-    QString style = "";
-       style += "QListView { ";
-       style += "font-family: Times New Roman;font-size: 15pt;";
-       style += "}";
-    QFont titre("Times New Roman", 24, QFont::Bold);
-    ui->listeDescription->setStyleSheet(style);
+    ui->listeDescription->setStyleSheet(style2);
     ui->listeDescription->addItems(R.getDescription());
     ui->listeDescription->itemAt(1,0)->setTextAlignment(Qt::AlignCenter);
     ui->listeDescription->itemAt(1,0)->setFont(titre);
@@ -156,47 +194,10 @@ void MainWindow::AfficherDescription()
 void MainWindow::AfficherIngredient()
 {
     //création du style de texte :
-    QString style = "";
-       style += "QListView { ";
-       style += "font-family: Times New Roman;font-size: 12pt;";
-       style += "}";
-    QFont titre("Times New Roman", 15, QFont::Bold);
-    ui->listeIngredient->setStyleSheet(style);
+    ui->listeIngredient->setStyleSheet(style1);
     ui->listeIngredient->addItems(R.getIngredient());
     ui->listeIngredient->itemAt(1,0)->setTextAlignment(Qt::AlignCenter);
     ui->listeIngredient->itemAt(1,0)->setFont(titre);
-}
-
-/**
- * \fn void MainWindow::AfficherEtapePrecedente()
- * \brief Fonction qui permet d'afficher l'étape précédente d'une recette
- *
- */
-
-void MainWindow::AfficherEtapePrecedente()
-{
-    numeroEtapeCourante --;
-    if(numeroEtapeCourante <= 0)
-    {
-        numeroEtapeCourante = 1;
-    }
-    AfficherEtape();
-}
-
-/**
- * \fn void MainWindow::AfficherEtapeSuivante()
- * \brief Fonction qui permet d'afficher l'étape suivante d'une recette
- *
- */
-
-void MainWindow::AfficherEtapeSuivante()
-{
-    numeroEtapeCourante ++;
-    if(numeroEtapeCourante >= 20)
-    {
-        numeroEtapeCourante = 19;
-    }
-    AfficherEtape();
 }
 
 /**
@@ -207,15 +208,26 @@ void MainWindow::AfficherEtapeSuivante()
 
 void MainWindow::AfficherEtape()
 {
-    QString style = "";
-       style += "QListView { ";
-       style += "font-family: Times New Roman;font-size: 12pt;";
-       style += "}";
-    QFont titre("Times New Roman", 15, QFont::Bold);
-    ui->listeEtapes->setStyleSheet(style);
-    ui->listeEtapes->addItems(R.getEtape(numeroEtapeCourante));
+    //efface la listeEtape
+    ui->listeEtapes->clear();
+    //ajoute un item contenant l'étape courante
+    ui->listeEtapes->addItem(ui->tempLabel->text());
+    ui->listeEtapes->setFont(style3);
     ui->listeEtapes->itemAt(1,0)->setTextAlignment(Qt::AlignCenter);
-    ui->listeEtapes->itemAt(1,0)->setFont(titre);
+}
+
+/**
+ * \fn void MainWindow::AfficherInformation();
+ * \brief Fonction qui permet d'afficher la liste des informations complémentaires d'une recette
+ *
+ */
+
+void MainWindow::AfficherInformation()
+{
+    for(int i=0;i<(ui->tableInformations->rowCount() * ui->tableInformations->columnCount());i++)
+    {
+        ui->tableInformations->setItem(i/2,(i)%2,new QTableWidgetItem(R.getInformation().at(i)));
+    }
 }
 
 /**
@@ -253,6 +265,7 @@ void MainWindow::MettreAJourRecette()
     AfficherDescription();
     AfficherIngredient();
     AfficherEtape();
+    TabInfoCompSetup();  //la fonction AfficherInformation() est appelé dans cette fonction
     AfficherTemps();
     AfficherURL();
 }

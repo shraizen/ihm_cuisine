@@ -11,6 +11,42 @@
 
 #include <string>
 #include <QStringListModel>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QDebug>
+#include <QJsonArray>
+#include <QFile>
+#include <QLabel>
+#include <QTextEdit>
+#include <QFileDialog>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QDebug>
+#include <QJsonValue>
+#include <QJsonArray>
+#include <QStringListModel>
+#include <QListView>
+#include <QLabel>
+#include <QStackedWidget>
+#include <QDropEvent>
+#include <QMimeData>
+#include <QStateMachine>
+#include <QMainWindow>
+#include <QTextEdit>
+#include <string>
+#include <QStringListModel>
+#include <QFileDialog>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QDebug>
+#include <QJsonValue>
+#include <QJsonArray>
+#include <QListView>
+#include <QLabel>
+#include <QFont>
+#include <cmath>
 
 /*! \class Recette
    * \brief classe permettant de stocker et modifier une recette de cuisine
@@ -24,6 +60,7 @@ private:
     QStringList Description; /*!< QStringList contenant la description*/
     QStringList Ingredient; /*!< QStringList contenant la liste des Ingrédient*/
     QStringList Etapes; /*!< QStringList contenant la liste des Etapes*/
+    QStringList Informations; /*!< QStringList contenant la liste des Informations*/
     QStringList Temps; /*!< QStringList contenant le temps*/
     QStringList URL; /*!< QStringList contenant l'URL*/
 
@@ -62,6 +99,24 @@ public:
      */
 
     QStringList getEtape(int);
+
+    /**
+     * \fn getter Etape
+     * \brief Fonction qui renvoie la liste des étapes d'une recette
+     *
+     * \return QStringList qui contient la liste des étapes d'une recette
+     */
+
+    QStringList getEtapes();
+
+    /**
+     * \fn getter Information
+     * \brief Fonction qui renvoie les informations complémentaires d'une recette
+     *
+     * \return QStringList qui contient les informations complémentaires d'une recette
+     */
+
+    QStringList getInformation();
 
     /**
      * \fn getter temps
@@ -107,6 +162,15 @@ public:
      */
 
     void setEtape(const QStringList&);
+
+    /**
+     * \fn setter Informations
+     * \brief Fonction qui modifie la liste des informations complémentaires d'une recette
+     *
+     * \param const QStringList qui contient la liste des informations complémentaires d'une recette
+     */
+
+    void setInformation(const QStringList&);
 
     /**
      * \fn setter Temps

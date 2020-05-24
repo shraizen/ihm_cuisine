@@ -51,6 +51,7 @@ void LectureJSON::Lecture(QString nomFichier, Recette& R)
            QStringList listeDescription;                                                      // ||
            QStringList listeIngredient;                                                       // ||
            QStringList listeEtape;                                                            // ||
+           QStringList listeInformation;                                                      // ||
            QStringList temps ;                                                                // ||
            QStringList URL;                                                                   // ||
            QJsonArray valArray = val.toArray();                                               // \/
@@ -74,6 +75,12 @@ void LectureJSON::Lecture(QString nomFichier, Recette& R)
                listeEtape << "instruction n°" + QString::number(compteur) + " :\n" + value.toString();// ||
            }                                                                                          // \/
 
+           listeInformation << "Image : " << (obj.value("image")).toString();                           // || Récupère les informations complémentaires
+           listeInformation << "Catégorie de recette : " << (obj.value("recipeCategory")).toString();   // ||
+           listeInformation << "Tag : " << (obj.value("keywords")).toString();                          // ||
+           double tmp = Trait.traitementNombreJson(obj, "recipeYield");                                 // ||
+           listeInformation << "Rendement estimé : " << QString::number(tmp) + " €";                    // \/
+
            temps << (obj.value("prepTime")).toString();                                       // ||Récupère les temps
            temps << (obj.value("cookTime")).toString();                                       // ||
            temps << (obj.value("totalTime")).toString();                                      // \/
@@ -82,6 +89,7 @@ void LectureJSON::Lecture(QString nomFichier, Recette& R)
            R.setDescription(listeDescription);                                                // || Met à jour les données de la recette
            R.setIngredient(listeIngredient);                                                  // ||
            R.setEtape(listeEtape);                                                            // ||
+           R.setInformation(listeInformation);                                                // ||
            R.setTemps(temps);                                                                 // ||
            R.setURL(URL);                                                                     // \/
        }

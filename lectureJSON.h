@@ -9,12 +9,7 @@
 #ifndef LECTUREJSON_H
 #define LECTUREJSON_H
 
-#include <QJsonParseError>
-#include <QJsonObject>
-#include <QDebug>
-#include <QJsonArray>
-#include <QFile>
-#include "recette.h"
+#include "traitement.h"
 
 /*! \class LectureJSON
    * \brief classe permettant la lecture d'un fichier JSON
@@ -23,7 +18,8 @@
 
 class LectureJSON
 {
-
+private:
+    Traitement Trait;
 public:
 
     /*!

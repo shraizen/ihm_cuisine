@@ -6,7 +6,7 @@
  *
  */
 
-#include "Recette.h"
+#include "recette.h"
 
 /**
  * \fn Recette::Recette()
@@ -55,6 +55,30 @@ QStringList Recette::getEtape(int numero)
     QStringList EtapeAAfficher;
     EtapeAAfficher << Etapes.at(numero);
     return(EtapeAAfficher);
+}
+
+/**
+ * \fn QStringList Recette::getEtapes()
+ * \brief Fonction qui renvoie la liste des étapes d'une recette
+ *
+ * \return QStringList qui contient la liste des étapes d'une recette
+ */
+
+QStringList Recette::getEtapes()
+{
+    return(Etapes);
+}
+
+/**
+ * \fn QStringList Recette::getInformation()
+ * \brief Fonction qui renvoie les informations complémentaires d'une recette
+ *
+ * \return QStringList qui contient les informations complémentaires d'une recette
+ */
+
+QStringList Recette::getInformation()
+{
+    return(Informations);
 }
 
 /**
@@ -115,6 +139,18 @@ void Recette::setIngredient(const QStringList& v)
 void Recette::setEtape(const QStringList& v)
 {
     Etapes << v;
+}
+
+/**
+ * \fn void setInformation(const QString&)
+ * \brief Fonction qui modifie la liste des informations complémentaires d'une recette
+ *
+ * \param v const QStringList qui contient la liste des informations complémentaires d'une recette
+ */
+
+void Recette::setInformation(const QStringList& v)
+{
+    Informations << v;
 }
 
 /**

@@ -1,19 +1,3 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
-#include <QMainWindow>
-#include <QLabel>
-#include <QTextEdit>
-#include <QFileDialog>
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QDebug>
-#include <QJsonValue>
-#include <QJsonArray>
-#include <QStringListModel>
-#include <QListView>
-#include <QLabel>
 /**
  * \file mainwindow.h
  * \author Masset Eliot - Pesquet Cedric
@@ -22,9 +6,10 @@
  *
  */
 
-#include <QDropEvent>
-#include <QMimeData>
-#include <QStateMachine>
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+#include <QMainWindow>
+
 #include "traitement.h"
 #include "lectureJSON.h"
 QT_BEGIN_NAMESPACE
@@ -68,13 +53,16 @@ public:
 private:
 
     Ui::MainWindow *ui; /*!< Ui::MainWindow contenant l'UI*/
-    QTextEdit * texte; /*!< QTextEdit contenant du texte*/
+    QLabel * label; /*!< QLabel contenant un texte*/
     Traitement Trait; /*!< Traitement contenant une instance de Traitement*/
     LectureJSON JSON; /*!< LectureJSON contenant une instance de LectureJSON*/
     Recette R; /*!< Recette contenant une instance de Recette*/
     QStateMachine * machine; /*!< QStateMachine contenant une machine à état*/
-    QList<QState> *etat; /*!< QState contenant un état*/
-    int numeroEtapeCourante; /*!< int contenant le numéro de l'étape courante*/
+    QString style1 = "QListView { font-family: Times New Roman;font-size: 12pt;}";/*!< QString contenant le style de text numéro 1*/
+    QString style2 = "QListView { font-family: Times New Roman;font-size: 15pt;}";/*!< QString contenant le style de text numéro 2*/
+    QFont style3{"Times New Roman", 15, QFont::Bold};/*!< QFont contenant le style de text numéro 3*/
+    QFont style4{"Times New Roman", 11, QFont::Bold};/*!< QFont contenant le style de text numéro 4*/
+    QFont titre{"Times New Roman", 24, QFont::Bold};/*!< QFont contenant le font des titres*/
 
     /**
      * \fn setup de la machine à état
@@ -91,6 +79,14 @@ private:
      */
 
     void MenuSetup();
+
+    /**
+     * \fn setup du tableau des informations complémentaires
+     * \brief Fonction de paramétrage du tableau d'affichage des informations complémentaires
+     *
+     */
+
+    void TabInfoCompSetup();
 
     /**
      * \fn survol évenement
@@ -156,28 +152,20 @@ public slots:
     void AfficherIngredient();
 
     /**
-     * \fn affiche étape précédente
-     * \brief Fonction qui permet d'afficher l'étape précédente d'une recette
-     *
-     */
-
-    void AfficherEtapePrecedente();
-
-    /**
-     * \fn affiche étape suivante
-     * \brief Fonction qui permet d'afficher l'étape suivante d'une recette
-     *
-     */
-
-    void AfficherEtapeSuivante();
-
-    /**
      * \fn affiche étape courante
      * \brief Fonction qui permet d'afficher une étape d'une recette
      *
      */
 
     void AfficherEtape();
+
+    /**
+     * \fn affiche informations
+     * \brief Fonction qui permet d'afficher la liste des informations complémentaires d'une recette
+     *
+     */
+
+    void AfficherInformation();
 
     /**
      * \fn affiche temps

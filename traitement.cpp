@@ -49,3 +49,29 @@ QStringList Traitement::traitementVueTemps(QStringList temps)
     return(TexteVueTemps);
 }
 
+/**
+ * \fn double Traitement::traitementNombreJson(QJsonObject obj, QString param)
+ * \brief Fonction qui traite un nombre d'un fichier Json pour le recupérer dans un double
+ *
+ * \param obj qui contient un QJsonObject
+ * \param param qui contient le nom du nombre à récupérer
+ * \return double qui contient un nombre
+ */
+
+double Traitement::traitementNombreJson(QJsonObject obj, QString param)
+{
+    QJsonValue recipeYield = obj.value(param);
+    int result = 0;
+    double tmp = recipeYield.toDouble();
+    if (tmp >= std::numeric_limits<int>::min() &&
+        tmp <= std::numeric_limits<int>::max() &&
+        std::floor(tmp) == tmp) 
+    {
+        result = std::floor(tmp);
+        tmp = result;
+    }
+    else {
+    }
+    return(tmp);
+}
+
